@@ -21,9 +21,8 @@ public class QualityAssuranceTest038 extends QualityAssuranceAbstract {
 
     @Override
     String getQuery() {
-        return "MATCH (x)-[r:hasModifiedResidue]->(y), " +
-                "     (x)-[:species]->(:Species{displayName:\"Homo sapiens\"}) " +
-                "WHERE r.stoichiometry > 1 " +
+        return " MATCH (x)-[r:hasModifiedResidue]->(y) " +
+                "WHERE NOT ()-[:inferredTo]->(x) AND r.stoichiometry > 1  " +
                 "OPTIONAL MATCH (a)-[:created]->(x) " +
                 "RETURN DISTINCT(x.dbId) AS dbIdA, x.stId AS stIdA, x.displayName AS nameA, y.dbId AS dbIdB, y.displayName AS nameB, a.displayName AS author";
     }

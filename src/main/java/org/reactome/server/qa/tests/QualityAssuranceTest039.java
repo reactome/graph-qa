@@ -21,7 +21,7 @@ public class QualityAssuranceTest039 extends QualityAssuranceAbstract {
 
     @Override
     String getQuery() {
-        return " MATCH (x{speciesName:\"Homo sapiens\"})-[r:precedingEvent]->(y) " +
+        return " MATCH (x{isInferred:False})-[r:precedingEvent]->(y) " +
                 "WHERE r.stoichiometry > 1 " +
                 "OPTIONAL MATCH (a)-[:created]->(x) " +
                 "RETURN DISTINCT(x.dbId) AS dbIdA,x.stId AS stIdA, x.displayName AS nameA, y.dbId AS dbIdB, y.stId AS stIdB, y.displayName AS nameB, a.displayName AS author";
@@ -29,6 +29,6 @@ public class QualityAssuranceTest039 extends QualityAssuranceAbstract {
 
     @Override
     void printResult(Result result, Path path) throws IOException {
-        print(result,path,"dbIdA","stIdA","nameA","dbIdB","stIdB","nameB","author");
+        print(result, path, "dbIdA", "stIdA", "nameA", "dbIdB", "stIdB", "nameB", "author");
     }
 }
