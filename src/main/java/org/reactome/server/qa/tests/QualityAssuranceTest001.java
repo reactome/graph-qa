@@ -17,7 +17,7 @@ public class QualityAssuranceTest001 extends QualityAssuranceAbstract {
 
     @Override
     String getQuery() {
-        return " MATCH (n)-[r]-(m)" +
+        return " MATCH (n)-[r]-(m) " +
                 "WHERE n = m " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
                 "RETURN DISTINCT (n.dbId) AS dbId, n.stId AS stId, n.displayName AS name, a.displayName AS author";

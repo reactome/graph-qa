@@ -21,7 +21,7 @@ public class QualityAssuranceTest048 extends QualityAssuranceAbstract {
 
     @Override
     String getQuery() {
-        return " MATCH (n:InstanceEdit)-[r:created]-(m:InstanceEdit)" +
+        return " MATCH (n:InstanceEdit)-[r:created]-(m:InstanceEdit) " +
                 "RETURN DISTINCT(n.dbId) AS dbIdA, n.displayName AS nameA, m.dbId AS dbIdB, m.displayName as nameB";
     }
 

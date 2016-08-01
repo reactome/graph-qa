@@ -21,7 +21,7 @@ public class QualityAssuranceTest031 extends QualityAssuranceAbstract {
 
     @Override
     String getQuery() {
-        return " MATCH (n)-[r:physicalEntity|activeUnit]->(x)," +
+        return " MATCH (n)-[r:physicalEntity|activeUnit]->(x), " +
                 "      (n)-[e]->(x) " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
                 "RETURN DISTINCT(n.dbId) AS dbIdA,n.stId AS stIdA, n.displayName AS nameA, x.dbId AS dbIdB, x.stId AS stIdB, x.displayName AS nameB, a.displayName AS author";

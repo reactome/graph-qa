@@ -17,7 +17,7 @@ public class QualityAssuranceTest046 extends QualityAssuranceAbstract {
 
     @Override
     String getQuery() {
-        return " MATCH (n:Event)" +
+        return " MATCH (n:Event) " +
                 "WHERE NOT (n)<-[:hasEvent]-() AND " +
                 "      NOT (n:TopLevelPathway) AND " +
                 "      n.isInferred = false " +
