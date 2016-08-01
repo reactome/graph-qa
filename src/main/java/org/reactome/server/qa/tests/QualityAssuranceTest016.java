@@ -1,16 +1,14 @@
 package org.reactome.server.qa.tests;
 
 import org.neo4j.ogm.model.Result;
-import org.reactome.server.qa.QATest;
+import org.reactome.server.qa.annotations.QATest;
 
 import java.io.IOException;
 import java.nio.file.Path;
 
 /**
- * Created by:
- *
- * @author Florian Korninger (florian.korninger@ebi.ac.uk)
- * @since 08.03.16.
+ * @author Florian Korninger <florian.korninger@ebi.ac.uk>
+ * @author Antonio Fabregat <fabregat@ebi.ac.uk>
  */
 @SuppressWarnings("unused")
 @QATest
@@ -23,12 +21,14 @@ public class QualityAssuranceTest016 extends QualityAssuranceAbstract {
 
     @Override
     String getQuery() {
-        return "Match (n:CatalystActivity)<-[:created]-(a) Where NOT (n)-[:activity]->() RETURN n.dbId AS dbId, " +
-                "n.stId AS stId, n.displayName AS name, a.displayName as author";
+        return " MATCH (n:CatalystActivity) " +
+                "WHERE NOT (n)-[:activity]->() " +
+                "OPTIONAL MATCH (a)-[:created]->(n) " +
+                "RETURN n.dbId AS dbId, n.stId AS stId, n.displayName AS name, a.displayName AS author";
     }
 
     @Override
     void printResult(Result result, Path path) throws IOException {
-        print(result,path,"dbId","name","author");
+        print(result, path, "dbId", "name", "author");
     }
 }

@@ -1,8 +1,7 @@
 package org.reactome.server.qa.tests;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.neo4j.ogm.model.Result;
-import org.reactome.server.qa.QualityAssurance;
 import org.reactome.server.graph.service.GeneralService;
 
 import java.io.IOException;
@@ -16,10 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by:
- *
- * @author Florian Korninger (florian.korninger@ebi.ac.uk)
- * @since 04.03.16.
+ * @author Florian Korninger <florian.korninger@ebi.ac.uk>
+ * @author Antonio Fabregat <fabregat@ebi.ac.uk>
  */
 public abstract class QualityAssuranceAbstract implements QualityAssurance {
 
@@ -27,6 +24,7 @@ public abstract class QualityAssuranceAbstract implements QualityAssurance {
     private static final String PREFIX = "QATest";
 
     abstract String getName();
+
     abstract String getQuery();
 
     Boolean doTest() {
@@ -40,26 +38,28 @@ public abstract class QualityAssuranceAbstract implements QualityAssurance {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void run(GeneralService genericService) {
-        if(doTest()) {
+    public boolean run(GeneralService genericService) {
+        if (doTest()) {
             Result result = genericService.query(getQuery(), getMap());
-            if (result == null || !result.iterator().hasNext()) return;
+            if (result == null || !result.iterator().hasNext()) return false;
             try {
                 Path path = createFile();
                 printResult(result, path);
+                return true;
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        return false;
     }
 
     void printResult(Result result, Path path) throws IOException {
-        print(result,path, "dbId","stId","name","author");
+        print(result, path, "dbId", "stId", "name", "author");
     }
 
-    void print (Result result, Path path, String... attributes) throws IOException {
+    void print(Result result, Path path, String... attributes) throws IOException {
         List<String> lines = new ArrayList<>();
-        lines.add(StringUtils.join(attributes,","));
+        lines.add(StringUtils.join(attributes, ","));
         for (Map<String, Object> map : result) {
             String line = "";
             for (String attribute : attributes) {
@@ -79,6 +79,6 @@ public abstract class QualityAssuranceAbstract implements QualityAssurance {
     }
 
     private String getPrefix() {
-        return  PREFIX + this.getClass().getSimpleName().replaceAll("\\D+","") + "-";
+        return PREFIX + this.getClass().getSimpleName().replaceAll("\\D+", "") + "-";
     }
 }

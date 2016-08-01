@@ -1,16 +1,14 @@
 package org.reactome.server.qa.tests;
 
 import org.neo4j.ogm.model.Result;
-import org.reactome.server.qa.QATest;
+import org.reactome.server.qa.annotations.QATest;
 
 import java.io.IOException;
 import java.nio.file.Path;
 
 /**
- * Created by:
- *
- * @author Florian Korninger (florian.korninger@ebi.ac.uk)
- * @since 14.03.16.
+ * @author Florian Korninger <florian.korninger@ebi.ac.uk>
+ * @author Antonio Fabregat <fabregat@ebi.ac.uk>
  */
 @SuppressWarnings("unused")
 @QATest
@@ -23,12 +21,14 @@ public class QualityAssuranceTest034 extends QualityAssuranceAbstract {
 
     @Override
     String getQuery() {
-        return "Match (n)<-[r:modified]-(m),(n)<-[:created]-(a) WHERE r.stoichiometry > 1 Return DISTINCT(n.dbId) AS dbIdA, " +
-                "n.displayName AS nameA, m.dbId AS dbIdB, m.displayName AS nameB, a.displayName AS author";
+        return " MATCH (n)<-[r:modified]-(m) " +
+                "WHERE r.stoichiometry > 1 " +
+                "OPTIONAL MATCH (a)-[:created]->(n) " +
+                "RETURN DISTINCT(n.dbId) AS dbIdA, n.displayName AS nameA, m.dbId AS dbIdB, m.displayName AS nameB, a.displayName AS author";
     }
 
     @Override
     void printResult(Result result, Path path) throws IOException {
-        print(result,path,"dbIdA","nameA","dbIdB","nameB","author");
+        print(result, path, "dbIdA", "nameA", "dbIdB", "nameB", "author");
     }
 }

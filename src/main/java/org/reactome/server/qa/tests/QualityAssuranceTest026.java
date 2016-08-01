@@ -1,16 +1,14 @@
 package org.reactome.server.qa.tests;
 
 import org.neo4j.ogm.model.Result;
-import org.reactome.server.qa.QATest;
+import org.reactome.server.qa.annotations.QATest;
 
 import java.io.IOException;
 import java.nio.file.Path;
 
 /**
- * Created by:
- *
- * @author Florian Korninger (florian.korninger@ebi.ac.uk)
- * @since 08.03.16.
+ * @author Florian Korninger <florian.korninger@ebi.ac.uk>
+ * @author Antonio Fabregat <fabregat@ebi.ac.uk>
  */
 @SuppressWarnings("unused")
 @QATest
@@ -23,14 +21,16 @@ public class QualityAssuranceTest026 extends QualityAssuranceAbstract {
 
     @Override
     String getQuery() {
-        return "Match (n)-[r:precedingEvent]->(x),(n)<-[e]-(x),(n)-[:species]->(s),(n)<-[:created]-(a) " +
-                "Where s.displayName=\"Homo sapiens\" RETURN DISTINCT(n.dbId) AS dbIdA,n.stId AS stIdA, " +
-                "n.displayName AS nameA, x.dbId AS dbIdB, x.stId AS stIdB, x.displayName AS nameB, a.displayName AS author";
+        return " MATCH (n)-[r:precedingEvent]->(x), " +
+                "      (n)<-[e]-(x), " +
+                "      (n)-[:species]->(s:Species{displayName:\"Homo sapiens\"}) " +
+                "OPTIONAL MATCH (a)-[:created]->(n) " +
+                "RETURN DISTINCT(n.dbId) AS dbIdA, n.stId AS stIdA, n.displayName AS nameA, x.dbId AS dbIdB, x.stId AS stIdB, x.displayName AS nameB, a.displayName AS author";
     }
 
     @Override
     void printResult(Result result, Path path) throws IOException {
-        print(result,path,"dbIdA","stIdA","nameA","dbIdB","stIdB","nameB","author");
+        print(result, path, "dbIdA", "stIdA", "nameA", "dbIdB", "stIdB", "nameB", "author");
     }
 }
 

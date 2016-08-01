@@ -1,12 +1,10 @@
 package org.reactome.server.qa.tests;
 
-import org.reactome.server.qa.QATest;
+import org.reactome.server.qa.annotations.QATest;
 
 /**
- * Created by:
- *
- * @author Florian Korninger (florian.korninger@ebi.ac.uk)
- * @since 18.03.16.
+ * @author Florian Korninger <florian.korninger@ebi.ac.uk>
+ * @author Antonio Fabregat <fabregat@ebi.ac.uk>
  */
 @SuppressWarnings("unused")
 @QATest
@@ -19,8 +17,11 @@ public class QualityAssuranceTest047 extends QualityAssuranceAbstract {
 
     @Override
     String getQuery() {
-        return "Match (n:Event) OPTIONAL MATCH (n)<-[:created]-(a) WITH n,a WHERE NOT (n)<-[:hasEvent]-() " +
-                "AND NOT (n:TopLevelPathway) AND n.isInferred = true Return DISTINCT(n.dbId) AS dbId, " +
-                "n.displayName AS name, n.stId as stId, a.displayName AS author";
+        return " MATCH (n:Event) " +
+                "WHERE NOT (n)<-[:hasEvent]-() AND " +
+                "      NOT (n:TopLevelPathway) AND " +
+                "      n.isInferred = true " +
+                "OPTIONAL MATCH (a)-[:created]->(n)" +
+                "RETURN DISTINCT(n.dbId) AS dbId, n.displayName AS name, n.stId as stId, a.displayName AS author";
     }
 }

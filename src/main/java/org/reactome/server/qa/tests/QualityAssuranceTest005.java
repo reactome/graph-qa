@@ -1,16 +1,15 @@
 package org.reactome.server.qa.tests;
 
-import org.reactome.server.qa.QATest;
+import org.reactome.server.qa.annotations.QATest;
 
 /**
- * Created by:
- *
- * @author Florian Korninger (florian.korninger@ebi.ac.uk)
- * @since 07.03.16.
+ * @author Florian Korninger <florian.korninger@ebi.ac.uk>
+ * @author Antonio Fabregat <fabregat@ebi.ac.uk>
  */
 @SuppressWarnings("unused")
 @QATest
 public class QualityAssuranceTest005 extends QualityAssuranceAbstract {
+
     @Override
     String getName() {
         return "PathwaysWithoutEvents";
@@ -18,7 +17,9 @@ public class QualityAssuranceTest005 extends QualityAssuranceAbstract {
 
     @Override
     String getQuery() {
-        return "Match (n:Pathway)<-[:created]-(a) Where NOT (n)-[:hasEvent]->() RETURN n.dbId AS dbId, n.stId AS stId, " +
-                "n.displayName AS name, a.displayName as author";
+        return " MATCH (n:Pathway) " +
+                "WHERE NOT (n)-[:hasEvent]->() " +
+                "OPTIONAL MATCH (a)-[:created]->(n) " +
+                "RETURN n.dbId AS dbId, n.stId AS stId, n.displayName AS name, a.displayName AS author";
     }
 }

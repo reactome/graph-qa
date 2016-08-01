@@ -1,20 +1,18 @@
 package org.reactome.server.qa.tests;
 
 import org.neo4j.ogm.model.Result;
-import org.reactome.server.qa.QATest;
+import org.reactome.server.qa.annotations.QATest;
 
 import java.io.IOException;
 import java.nio.file.Path;
 
 /**
- * Created by:
- *
- * @author Florian Korninger (florian.korninger@ebi.ac.uk)
- * @since 07.03.16.
+ * @author Florian Korninger <florian.korninger@ebi.ac.uk>
+ * @author Antonio Fabregat <fabregat@ebi.ac.uk>
  */
 @SuppressWarnings("unused")
 @QATest
-public class QualityAssuranceTest002 extends QualityAssuranceAbstract{
+public class QualityAssuranceTest002 extends QualityAssuranceAbstract {
 
     @Override
     String getName() {
@@ -23,12 +21,14 @@ public class QualityAssuranceTest002 extends QualityAssuranceAbstract{
 
     @Override
     String getQuery() {
-        return "Match (n:Person)<-[:created]-(a) Where n.surname is NULL OR (n.firstname is NULL AND n.initial is NULL) " +
-                "RETURN n.dbId AS dbId, n.displayName AS name, a.displayName as author";
+        return " MATCH (n:Person) " +
+                "WHERE n.surname is NULL OR (n.firstname is NULL AND n.initial is NULL) " +
+                "OPTIONAL MATCH (a)-[:created]->(n) " +
+                "RETURN n.dbId AS dbId, n.displayName AS name, a.displayName AS author";
     }
 
     @Override
     void printResult(Result result, Path path) throws IOException {
-        print(result,path,"dbId","name","author");
+        print(result, path, "dbId", "name", "author");
     }
 }
