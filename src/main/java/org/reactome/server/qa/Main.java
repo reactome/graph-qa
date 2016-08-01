@@ -58,6 +58,6 @@ public class Main {
                 e.printStackTrace();
             }
         }
-        if(verbose) System.out.println("\r" + count + " test generated reports.\nPlease check the files out to find out more.");
+        if(verbose) System.out.println("\r" + count + " test generated reports.\nPlease check the files to find out more.");
     }
 }
