@@ -61,11 +61,11 @@ public abstract class QualityAssuranceAbstract implements QualityAssurance {
         List<String> lines = new ArrayList<>();
         lines.add(StringUtils.join(attributes, ","));
         for (Map<String, Object> map : result) {
-            String line = "";
+            List<String> line = new ArrayList<>();
             for (String attribute : attributes) {
-                line += "\"" + map.get(attribute) + "\",";
+                line.add("\"" + map.get(attribute) + "\"");
             }
-            lines.add(line);
+            lines.add(StringUtils.join(line, ","));
         }
         Files.write(path, lines, Charset.forName("UTF-8"));
     }
