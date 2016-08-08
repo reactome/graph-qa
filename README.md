@@ -21,5 +21,5 @@ When executing the jar file following properties have to be set.
     -h  Reactome Neo4j host. DEFAULT: localhost
     -b  Reactome Neo4j port. DEFAULT: 7474
     -u  Reactome Neo4j user. DEFAULT: neo4j
-    -p  Reactome Neo4j password. DEFAULT: reactome
+    -p  Reactome Neo4j password. DEFAULT: neo4j
     -v  Verbose output 
