@@ -2,12 +2,12 @@ package org.reactome.server.qa;
 
 import com.martiansoftware.jsap.*;
 import org.reactome.server.graph.service.GeneralService;
+import org.reactome.server.graph.utils.ReactomeGraphCore;
 import org.reactome.server.qa.annotations.QATest;
 import org.reactome.server.qa.config.GraphQANeo4jConfig;
 import org.reactome.server.qa.tests.QualityAssurance;
 import org.reactome.server.qa.tests.QualityAssuranceAbstract;
 import org.reflections.Reflections;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Set;
@@ -35,13 +35,10 @@ public class Main {
         JSAPResult config = jsap.parse(args);
         if (jsap.messagePrinted()) System.exit(1);
 
-        System.setProperty("neo4j.host", config.getString("host"));
-        System.setProperty("neo4j.port", config.getString("port"));
-        System.setProperty("neo4j.user", config.getString("user"));
-        System.setProperty("neo4j.password", config.getString("password"));
+        //Initialising ReactomeCore Neo4j configuration
+        ReactomeGraphCore.initialise(config.getString("host"), config.getString("port"), config.getString("user"), config.getString("password"), GraphQANeo4jConfig.class);
 
-        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(GraphQANeo4jConfig.class); // Use annotated beans from the specified package
-        GeneralService genericService = ctx.getBean(GeneralService.class);
+        GeneralService genericService = ReactomeGraphCore.getService(GeneralService.class);
 
         Reflections reflections = new Reflections(QualityAssuranceAbstract.class.getPackage().getName());
         Set<Class<?>> tests = reflections.getTypesAnnotatedWith(QATest.class);
