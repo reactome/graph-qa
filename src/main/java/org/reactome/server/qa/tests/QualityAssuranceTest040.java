@@ -21,10 +21,10 @@ public class QualityAssuranceTest040 extends QualityAssuranceAbstract {
 
     @Override
     String getQuery() {
-        return " MATCH (x)-[r:hasMember]->(y) " +
-                "WHERE r.stoichiometry > 1 " +
-                "OPTIONAL MATCH (a)-[:created]->(x) " +
-                "RETURN DISTINCT(x.dbId) AS dbIdA,x.stId AS stIdA, x.displayName AS nameA, y.dbId AS dbIdB, y.stId AS stIdB, y.displayName AS nameB, a.displayName AS author";
+        return " MATCH (es:EntitySet)-[r:hasMember]->(m) " +
+                "WHERE NOT (m:EntitySet) AND r.stoichiometry > 1 " +
+                "OPTIONAL MATCH (a)-[:created]->(es) " +
+                "RETURN DISTINCT(es.dbId) AS dbIdA, es.stId AS stIdA, es.displayName AS nameA, m.dbId AS dbIdB, m.stId AS stIdB, m.displayName AS nameB, a.displayName AS author";
     }
 
     @Override
