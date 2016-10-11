@@ -25,11 +25,12 @@ public class Main {
 
         SimpleJSAP jsap = new SimpleJSAP(Main.class.getName(), "A tool for testing the integrity and consistency of the data imported in the existing graph database",
                 new Parameter[]{
-                        new FlaggedOption(  "host",     JSAP.STRING_PARSER, "localhost",     JSAP.REQUIRED,     'h', "host",     "The neo4j host"),
-                        new FlaggedOption(  "port",     JSAP.STRING_PARSER, "7474",          JSAP.NOT_REQUIRED, 'b', "port",     "The neo4j port"),
-                        new FlaggedOption(  "user",     JSAP.STRING_PARSER, "neo4j",         JSAP.REQUIRED,     'u', "user",     "The neo4j user"),
-                        new FlaggedOption(  "password", JSAP.STRING_PARSER, "reactome",      JSAP.REQUIRED,     'p', "password", "The neo4j password"),
-                        new QualifiedSwitch("verbose",  JSAP.BOOLEAN_PARSER, JSAP.NO_DEFAULT, JSAP.NOT_REQUIRED, 'v', "verbose",  "Requests verbose output")
+                        new FlaggedOption(  "host",     JSAP.STRING_PARSER,  "localhost",       JSAP.REQUIRED,     'h', "host",     "The neo4j host"          ),
+                        new FlaggedOption(  "port",     JSAP.STRING_PARSER,  "7474",            JSAP.NOT_REQUIRED, 'b', "port",     "The neo4j port"          ),
+                        new FlaggedOption(  "user",     JSAP.STRING_PARSER,  "neo4j",           JSAP.REQUIRED,     'u', "user",     "The neo4j user"          ),
+                        new FlaggedOption(  "password", JSAP.STRING_PARSER,  "reactome",        JSAP.REQUIRED,     'p', "password", "The neo4j password"      ),
+                        new FlaggedOption(  "output",   JSAP.STRING_PARSER,  null,              JSAP.REQUIRED,     'o', "output",   "Output folder"           ),
+                        new QualifiedSwitch("verbose",  JSAP.BOOLEAN_PARSER, JSAP.NO_DEFAULT,   JSAP.NOT_REQUIRED, 'v', "verbose",  "Requests verbose output" )
                 }
         );
         JSAPResult config = jsap.parse(args);
@@ -43,14 +44,18 @@ public class Main {
         Reflections reflections = new Reflections(QualityAssuranceAbstract.class.getPackage().getName());
         Set<Class<?>> tests = reflections.getTypesAnnotatedWith(QATest.class);
 
+        String path = config.getString("output");
+        if(!path.endsWith("/")) path += "/";
+
         boolean verbose = config.getBoolean("verbose");
+
         int n = tests.size(), i = 1, count = 0;
         for (Class test : tests) {
             try {
                 Object object = test.newInstance();
                 QualityAssurance qATest = (QualityAssurance) object;
                 if(verbose) System.out.print("\rRunning test " + (i++) + " of " + n);
-                if(qATest.run(genericService)) count++;
+                if(qATest.run(genericService, path)) count++;
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }

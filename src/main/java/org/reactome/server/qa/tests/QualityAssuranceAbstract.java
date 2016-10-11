@@ -20,7 +20,6 @@ import java.util.Map;
  */
 public abstract class QualityAssuranceAbstract implements QualityAssurance {
 
-    private static final String PATH = "./target/qATests/";
     private static final String PREFIX = "QATest";
 
     abstract String getName();
@@ -38,13 +37,12 @@ public abstract class QualityAssuranceAbstract implements QualityAssurance {
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean run(GeneralService genericService) {
+    public boolean run(GeneralService genericService, String path) {
         if (doTest()) {
             Result result = genericService.query(getQuery(), getMap());
             if (result == null || !result.iterator().hasNext()) return false;
             try {
-                Path path = createFile();
-                printResult(result, path);
+                printResult(result, createFile(path));
                 return true;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -70,12 +68,12 @@ public abstract class QualityAssuranceAbstract implements QualityAssurance {
         Files.write(path, lines, Charset.forName("UTF-8"));
     }
 
-    private Path createFile() throws IOException {
-        Path path = Paths.get(PATH + getPrefix() + getName() + ".csv");
-        Files.deleteIfExists(path);
-        Files.createDirectories(path.getParent());
-        Files.createFile(path);
-        return path;
+    private Path createFile(String path) throws IOException {
+        Path p = Paths.get(path + getPrefix() + getName() + ".csv");
+        Files.deleteIfExists(p);
+        if(!Files.isSymbolicLink(p.getParent())) Files.createDirectories(p.getParent());
+        Files.createFile(p);
+        return p;
     }
 
     private String getPrefix() {
