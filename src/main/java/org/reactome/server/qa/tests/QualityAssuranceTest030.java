@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 /**
- * @author Florian Korninger <florian.korninger@ebi.ac.uk>
  * @author Antonio Fabregat <fabregat@ebi.ac.uk>
  */
 @SuppressWarnings("unused")
@@ -16,20 +15,23 @@ public class QualityAssuranceTest030 extends QualityAssuranceAbstract {
 
     @Override
     String getName() {
-        return "ReferenceSequenceAndSecondReferenceSequencePointToSameEntry";
+        return "PhysicalEntitiesWithMoreThanOneCompartment";
     }
 
     @Override
     String getQuery() {
-        return " MATCH (n)-[r:referenceSequence|secondReferenceSequence]->(x)," +
-                "      (n)-[e]->(x) " +
-                "OPTIONAL MATCH (a)-[:created]->(n) " +
-                "RETURN DISTINCT(n.dbId) AS dbIdA,n.stId AS stIdA, n.displayName AS nameA, x.dbId AS dbIdB, x.stId AS stIdB, x.displayName AS nameB, a.displayName AS author";
+        return " MATCH (pe:PhysicalEntity)-[:compartment]->(c:Compartment) " +
+                "WHERE NOT (pe)-[:entityOnOtherCell]->() " +
+                "OPTIONAL MATCH (a)-[:created]->(pe) " +
+                "WITH pe, COUNT(c) as compartments, a " +
+                "WHERE compartments > 1 " +
+                "RETURN pe.stId AS PE, pe.displayName AS Name, pe.simpleLabel AS SchemaClass, compartments AS Compartments, a.displayName AS CuratedBy " +
+                "ORDER BY CuratedBy, pe.speciesName";
     }
 
     @Override
     void printResult(Result result, Path path) throws IOException {
-        print(result, path, "dbIdA", "stIdA", "nameA", "dbIdB", "stIdB", "nameB", "author");
+        print(result, path, "PE", "Name", "SchemaClass", "Compartments", "CuratedBy");
     }
 }
 
