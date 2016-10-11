@@ -21,9 +21,9 @@ public class QualityAssuranceTest051 extends QualityAssuranceAbstract {
 
     @Override
     String getQuery() {
-        return " MATCH (a:LiteratureReference),(b:LiteratureReference) " +
-                "WHERE NOT a=b AND a.pubMedIdentifier = b.pubMedIdentifier  " +
-                "RETURN DISTINCT a.dbId AS dbIdA, a.displayName AS nameA, b.dbId AS dbIdB, b.displayName AS nameB";
+        return " MATCH (n:Person), (p:Person) " +
+                "WHERE NOT n = p AND n.orcidId= p.orcidId " +
+                "RETURN DISTINCT n.dbId AS dbIdA, n.displayName AS nameA, p.dbId AS dbIdB, p.displayName AS nameB";
     }
 
     @Override
