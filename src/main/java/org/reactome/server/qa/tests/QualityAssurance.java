@@ -7,5 +7,7 @@ import org.reactome.server.graph.service.GeneralService;
  */
 public interface QualityAssurance {
 
+    String getName();
+
     boolean run(GeneralService genericService, String path);
 }

@@ -54,7 +54,7 @@ public class Main {
             try {
                 Object object = test.newInstance();
                 QualityAssurance qATest = (QualityAssurance) object;
-                if(verbose) System.out.print("\rRunning test " + (i++) + " of " + n);
+                if(verbose) System.out.print("\rRunning test " + qATest.getName() + " [" + (i++) + " of " + n + "]");
                 if(qATest.run(genericService, path)) count++;
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
