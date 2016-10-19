@@ -15,7 +15,7 @@ import java.nio.file.Path;
 public class QualityAssuranceTest040 extends QualityAssuranceAbstract {
 
     @Override
-    String getName() {
+    public String getName() {
         return "HasMemberRelationshipDuplication";
     }
 
@@ -24,12 +24,14 @@ public class QualityAssuranceTest040 extends QualityAssuranceAbstract {
         return " MATCH (es:EntitySet)-[r:hasMember]->(m) " +
                 "WHERE NOT (m:EntitySet) AND r.stoichiometry > 1 " +
                 "OPTIONAL MATCH (a)-[:created]->(es) " +
-                "RETURN DISTINCT(es.dbId) AS dbIdA, es.stId AS stIdA, es.displayName AS nameA, m.dbId AS dbIdB, m.stId AS stIdB, m.displayName AS nameB, a.displayName AS author";
+                "OPTIONAL MATCH (b)-[:modified]->(es) " +
+                "RETURN DISTINCT(es.dbId) AS dbIdA, es.stId AS stIdA, es.displayName AS nameA, m.dbId AS dbIdB, m.stId AS stIdB, m.displayName AS nameB, a.displayName AS created, b.displayName AS modified " +
+                "ORDER BY created, modified, stIdA, dbIdA, stIdB, dbIdB";
     }
 
     @Override
     void printResult(Result result, Path path) throws IOException {
-        print(result,path,"dbIdA","stIdA","nameA","dbIdB","stIdB","nameB","author");
+        print(result, path, "dbIdA", "stIdA", "nameA", "dbIdB", "stIdB", "nameB", "created", "modified");
     }
 }
 

@@ -15,7 +15,7 @@ import java.nio.file.Path;
 public class QualityAssuranceTest035 extends QualityAssuranceAbstract {
 
     @Override
-    String getName() {
+    public String getName() {
         return "CrossReferenceRelationshipDuplication";
     }
 
@@ -24,11 +24,13 @@ public class QualityAssuranceTest035 extends QualityAssuranceAbstract {
         return " MATCH (x)-[r:crossReference]->(y) " +
                 "WHERE r.stoichiometry > 1 " +
                 "OPTIONAL MATCH (a)-[:created]->(x) " +
-                "RETURN DISTINCT(x.dbId) AS dbIdA, x.stId AS stIdA, x.displayName AS nameA, y.dbId AS dbIdB, y.stId AS stIdB, y.displayName AS nameB, a.displayName AS author";
+                "OPTIONAL MATCH (m)-[:modified]->(x) " +
+                "RETURN DISTINCT(x.dbId) AS dbIdA, x.stId AS stIdA, x.displayName AS nameA, y.dbId AS dbIdB, y.stId AS stIdB, y.displayName AS nameB, a.displayName AS created, m.displayName AS modified " +
+                "ORDER BY created, modified, stIdA, dbIdA, stIdB, dbIdB";
     }
 
     @Override
     void printResult(Result result, Path path) throws IOException {
-        print(result, path, "dbIdA", "stIdA", "nameA", "dbIdB", "stIdB", "nameB", "author");
+        print(result, path, "dbIdA", "stIdA", "nameA", "dbIdB", "stIdB", "nameB", "created", "modified");
     }
 }

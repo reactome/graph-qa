@@ -22,8 +22,6 @@ public abstract class QualityAssuranceAbstract implements QualityAssurance {
 
     private static final String PREFIX = "QATest";
 
-    abstract String getName();
-
     abstract String getQuery();
 
     Boolean doTest() {
@@ -52,7 +50,7 @@ public abstract class QualityAssuranceAbstract implements QualityAssurance {
     }
 
     void printResult(Result result, Path path) throws IOException {
-        print(result, path, "dbId", "stId", "name", "author");
+        print(result, path, "dbId", "stId", "name", "created", "modified");
     }
 
     void print(Result result, Path path, String... attributes) throws IOException {

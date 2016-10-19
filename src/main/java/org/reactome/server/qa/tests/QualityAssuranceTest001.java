@@ -11,15 +11,17 @@ import org.reactome.server.qa.annotations.QATest;
 public class QualityAssuranceTest001 extends QualityAssuranceAbstract {
 
     @Override
-    String getName() {
+    public String getName() {
         return "DatabaseObjectsWithSelfLoops";
     }
 
     @Override
     String getQuery() {
-        return " MATCH (n)-[r]-(m) " +
-                "WHERE n = m " +
+        return " MATCH (n)-[r]-(o) " +
+                "WHERE n = o " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
-                "RETURN DISTINCT (n.dbId) AS dbId, n.stId AS stId, n.displayName AS name, a.displayName AS author";
+                "OPTIONAL MATCH (m)-[:modified]->(n) " +
+                "RETURN DISTINCT (n.dbId) AS dbId, n.stId AS stId, n.displayName AS name, a.displayName AS created, m.displayName AS modified " +
+                "ORDER BY created, modified, stId, dbId";
     }
 }

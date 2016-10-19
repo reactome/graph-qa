@@ -14,24 +14,25 @@ import java.nio.file.Path;
 public class QualityAssuranceTest030 extends QualityAssuranceAbstract {
 
     @Override
-    String getName() {
+    public String getName() {
         return "PhysicalEntitiesWithMoreThanOneCompartment";
     }
 
     @Override
     String getQuery() {
         return " MATCH (pe:PhysicalEntity)-[:compartment]->(c:Compartment) " +
-                "WHERE NOT (pe)-[:entityOnOtherCell]->() " +
+                "WHERE NOT (pe)-[:entityOnOtherCell]->() AND NOT ()-[:inferredTo]->(pe) " +
                 "OPTIONAL MATCH (a)-[:created]->(pe) " +
-                "WITH pe, COUNT(c) as compartments, a " +
+                "OPTIONAL MATCH (m)-[:modified]->(pe) " +
+                "WITH pe, COUNT(c) as compartments, a, m " +
                 "WHERE compartments > 1 " +
-                "RETURN pe.stId AS PE, pe.displayName AS Name, pe.simpleLabel AS SchemaClass, compartments AS Compartments, a.displayName AS CuratedBy " +
-                "ORDER BY CuratedBy, pe.speciesName";
+                "RETURN pe.stId AS PE, pe.displayName AS Name, pe.simpleLabel AS SchemaClass, compartments AS Compartments, a.displayName AS Created, m.displayName AS Modified " +
+                "ORDER BY Created, Modified, pe.speciesName";
     }
 
     @Override
     void printResult(Result result, Path path) throws IOException {
-        print(result, path, "PE", "Name", "SchemaClass", "Compartments", "CuratedBy");
+        print(result, path, "PE", "Name", "SchemaClass", "Compartments", "Created", "Modified");
     }
 }
 

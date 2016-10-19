@@ -11,7 +11,7 @@ import org.reactome.server.qa.annotations.QATest;
 public class QualityAssuranceTest047 extends QualityAssuranceAbstract {
 
     @Override
-    String getName() {
+    public String getName() {
         return "OrphanEventsComputationallyInferred";
     }
 
@@ -21,7 +21,9 @@ public class QualityAssuranceTest047 extends QualityAssuranceAbstract {
                 "WHERE NOT (n)<-[:hasEvent]-() AND " +
                 "      NOT (n:TopLevelPathway) AND " +
                 "      n.isInferred = true " +
-                "OPTIONAL MATCH (a)-[:created]->(n)" +
-                "RETURN DISTINCT(n.dbId) AS dbId, n.displayName AS name, n.stId as stId, a.displayName AS author";
+                "OPTIONAL MATCH (a)-[:created]->(n) " +
+                "OPTIONAL MATCH (m)-[:modified]->(n) " +
+                "RETURN DISTINCT(n.dbId) AS dbId, n.displayName AS name, n.stId as stId, a.displayName AS created, m.displayName AS modified " +
+                "ORDER BY created, modified, stId, dbId";
     }
 }

@@ -11,7 +11,7 @@ import org.reactome.server.qa.annotations.QATest;
 public class QualityAssuranceTest011 extends QualityAssuranceAbstract {
 
     @Override
-    String getName() {
+    public String getName() {
         return "PolymerWithoutRepeatedUnit";
     }
 
@@ -20,7 +20,9 @@ public class QualityAssuranceTest011 extends QualityAssuranceAbstract {
         return " MATCH (n:Polymer) " +
                 "WHERE NOT (n)-[:repeatedUnit]->() " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
-                "RETURN n.dbId AS dbId, n.stId AS stId, n.displayName AS name, a.displayName AS author";
+                "OPTIONAL MATCH (m)-[:modified]->(n) " +
+                "RETURN n.dbId AS dbId, n.stId AS stId, n.displayName AS name, a.displayName AS created, m.displayName AS modified " +
+                "ORDER BY created, modified, stId, dbId";
     }
 }
 

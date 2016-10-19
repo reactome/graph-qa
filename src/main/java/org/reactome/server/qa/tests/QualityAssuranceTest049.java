@@ -15,7 +15,7 @@ import java.nio.file.Path;
 public class QualityAssuranceTest049 extends QualityAssuranceAbstract {
 
     @Override
-    String getName() {
+    public String getName() {
         return "InstanceEditModifiesInstanceEdit";
     }
 

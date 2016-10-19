@@ -15,7 +15,7 @@ import java.nio.file.Path;
 public class QualityAssuranceTest034 extends QualityAssuranceAbstract {
 
     @Override
-    String getName() {
+    public String getName() {
         return "ModifiedRelationshipDuplication";
     }
 
@@ -24,11 +24,12 @@ public class QualityAssuranceTest034 extends QualityAssuranceAbstract {
         return " MATCH (n)<-[r:modified]-(m) " +
                 "WHERE r.stoichiometry > 1 " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
-                "RETURN DISTINCT(n.dbId) AS dbIdA, n.displayName AS nameA, m.dbId AS dbIdB, m.displayName AS nameB, a.displayName AS author";
+                "RETURN DISTINCT(n.dbId) AS dbIdA, n.displayName AS nameA, m.dbId AS dbIdB, m.displayName AS nameB, a.displayName AS created " +
+                "ORDER BY created";
     }
 
     @Override
     void printResult(Result result, Path path) throws IOException {
-        print(result, path, "dbIdA", "nameA", "dbIdB", "nameB", "author");
+        print(result, path, "dbIdA", "nameA", "dbIdB", "nameB", "created");
     }
 }

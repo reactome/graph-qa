@@ -1,17 +1,15 @@
 package org.reactome.server.qa.tests;
 
-import org.reactome.server.qa.annotations.QATest;
-
 /**
  * @author Florian Korninger <florian.korninger@ebi.ac.uk>
  * @author Antonio Fabregat <fabregat@ebi.ac.uk>
  */
 @SuppressWarnings("unused")
-@QATest
+//@QATest
 public class QualityAssuranceTest046 extends QualityAssuranceAbstract {
 
     @Override
-    String getName() {
+    public String getName() {
         return "OrphanEventsNotComputationalInferred";
     }
 
@@ -22,7 +20,9 @@ public class QualityAssuranceTest046 extends QualityAssuranceAbstract {
                 "      NOT (n:TopLevelPathway) AND " +
                 "      n.isInferred = false " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
-                "RETURN DISTINCT(n.dbId) AS dbId, n.displayName AS name, n.stId as stId, a.displayName AS author";
+                "OPTIONAL MATCH (m)-[:modified]->(n) " +
+                "RETURN DISTINCT(n.dbId) AS dbId, n.displayName AS name, n.stId as stId, a.displayName AS created, m.displayName AS modified " +
+                "ORDER BY created, modified, stId, dbId";
     }
 }
 

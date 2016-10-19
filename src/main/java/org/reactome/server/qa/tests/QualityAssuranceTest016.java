@@ -15,7 +15,7 @@ import java.nio.file.Path;
 public class QualityAssuranceTest016 extends QualityAssuranceAbstract {
 
     @Override
-    String getName() {
+    public String getName() {
         return "CatalystActivityWithoutActivity";
     }
 
@@ -24,11 +24,13 @@ public class QualityAssuranceTest016 extends QualityAssuranceAbstract {
         return " MATCH (n:CatalystActivity) " +
                 "WHERE NOT (n)-[:activity]->() " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
-                "RETURN n.dbId AS dbId, n.stId AS stId, n.displayName AS name, a.displayName AS author";
+                "OPTIONAL MATCH (m)-[:modified]->(n) " +
+                "RETURN n.dbId AS dbId, n.stId AS stId, n.displayName AS name, a.displayName AS created, m.displayName AS modified " +
+                "ORDER BY created, modified, stId, dbId";
     }
 
     @Override
     void printResult(Result result, Path path) throws IOException {
-        print(result, path, "dbId", "name", "author");
+        print(result, path, "dbId", "name", "created", "modified");
     }
 }

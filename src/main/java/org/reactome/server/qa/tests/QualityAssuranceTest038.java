@@ -15,7 +15,7 @@ import java.nio.file.Path;
 public class QualityAssuranceTest038 extends QualityAssuranceAbstract {
 
     @Override
-    String getName() {
+    public String getName() {
         return "HasModifiedResidueRelationshipDuplication";
     }
 
@@ -24,12 +24,14 @@ public class QualityAssuranceTest038 extends QualityAssuranceAbstract {
         return " MATCH (x)-[r:hasModifiedResidue]->(y) " +
                 "WHERE NOT ()-[:inferredTo]->(x) AND r.stoichiometry > 1  " +
                 "OPTIONAL MATCH (a)-[:created]->(x) " +
-                "RETURN DISTINCT(x.dbId) AS dbIdA, x.stId AS stIdA, x.displayName AS nameA, y.dbId AS dbIdB, y.displayName AS nameB, a.displayName AS author";
+                "OPTIONAL MATCH (m)-[:modified]->(x) " +
+                "RETURN DISTINCT(x.dbId) AS dbIdA, x.stId AS stIdA, x.displayName AS nameA, y.dbId AS dbIdB, y.displayName AS nameB, a.displayName AS created, m.displayName AS modified " +
+                "ORDER BY created, modified, stIdA, dbIdA, dbIdB";
     }
 
     @Override
     void printResult(Result result, Path path) throws IOException {
-        print(result, path, "dbIdA", "stIdA", "nameA", "dbIdB", "nameB", "author");
+        print(result, path, "dbIdA", "stIdA", "nameA", "dbIdB", "nameB", "created", "modified");
     }
 }
 

@@ -11,7 +11,7 @@ import org.reactome.server.qa.annotations.QATest;
 public class QualityAssuranceTest006 extends QualityAssuranceAbstract {
 
     @Override
-    String getName() {
+    public String getName() {
         return "EwasWithoutReferenceEntity";
     }
 
@@ -20,6 +20,8 @@ public class QualityAssuranceTest006 extends QualityAssuranceAbstract {
         return " MATCH (n:EntityWithAccessionedSequence) " +
                 "WHERE NOT (n)-[:referenceEntity]->() " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
-                "RETURN n.dbId AS dbId, n.stId AS stId, n.displayName AS name, a.displayName AS author";
+                "OPTIONAL MATCH (m)-[:modified]->(n) " +
+                "RETURN n.dbId AS dbId, n.stId AS stId, n.displayName AS name, a.displayName AS created, m.displayName AS modified " +
+                "ORDER BY created, modified, stId, dbId";
     }
 }

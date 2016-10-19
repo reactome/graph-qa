@@ -15,7 +15,7 @@ import java.nio.file.Path;
 public class QualityAssuranceTest041 extends QualityAssuranceAbstract {
 
     @Override
-    String getName() {
+    public String getName() {
         return "SummationRelationshipDuplication";
     }
 
@@ -24,6 +24,7 @@ public class QualityAssuranceTest041 extends QualityAssuranceAbstract {
         return " MATCH (x)-[r:summation]->(y) " +
                 "WHERE r.stoichiometry > 1 " +
                 "OPTIONAL MATCH (a)-[:created]->(x) " +
+                "OPTIONAL MATCH (m)-[:modified]->(x) " +
                 "RETURN DISTINCT(x.dbId) AS dbIdA,x.stId AS stIdA, x.displayName AS nameA, y.dbId AS dbIdB, y.displayName AS nameB, a.displayName AS author";
     }
 

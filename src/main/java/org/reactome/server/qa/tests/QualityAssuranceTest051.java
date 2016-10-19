@@ -15,7 +15,7 @@ import java.nio.file.Path;
 public class QualityAssuranceTest051 extends QualityAssuranceAbstract {
 
     @Override
-    String getName() {
+    public String getName() {
         return "PersonsWithSameORCID";
     }
 

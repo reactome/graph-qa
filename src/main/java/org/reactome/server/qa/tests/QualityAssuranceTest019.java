@@ -11,7 +11,7 @@ import org.reactome.server.qa.annotations.QATest;
 public class QualityAssuranceTest019 extends QualityAssuranceAbstract {
 
     @Override
-    String getName() {
+    public String getName() {
         return "PublicationsWithoutAuthor";
     }
 
@@ -20,7 +20,8 @@ public class QualityAssuranceTest019 extends QualityAssuranceAbstract {
         return " MATCH (n:Publication) " +
                 "WHERE NOT (n)-[:author]-() " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
-                "RETURN n.dbId AS dbId, n.stId AS stId, n.displayName AS name, a.displayName AS author";
+                "OPTIONAL MATCH (m)-[:modified]->(n) " +
+                "RETURN n.dbId AS dbId, n.stId AS stId, n.displayName AS name, a.displayName AS created, m.displayName AS modified";
     }
 }
 

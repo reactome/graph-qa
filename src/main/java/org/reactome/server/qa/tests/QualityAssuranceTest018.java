@@ -16,7 +16,7 @@ import java.nio.file.Path;
 public class QualityAssuranceTest018 extends QualityAssuranceAbstract {
 
     @Override
-    String getName() {
+    public String getName() {
         return "DatabaseObjectsWithoutCreated";
     }
 

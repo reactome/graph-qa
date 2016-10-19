@@ -15,7 +15,7 @@ import java.nio.file.Path;
 public class QualityAssuranceTest026 extends QualityAssuranceAbstract {
 
     @Override
-    String getName() {
+    public String getName() {
         return "HumanEventsWithCyclicPrecedingEvents";
     }
 
@@ -24,12 +24,14 @@ public class QualityAssuranceTest026 extends QualityAssuranceAbstract {
         return " MATCH (n:Event{isInferred:False})-[r:precedingEvent]->(x:Event), " +
                 "      (n)<-[e]-(x) " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
-                "RETURN DISTINCT(n.dbId) AS dbIdA, n.stId AS stIdA, n.displayName AS nameA, x.dbId AS dbIdB, x.stId AS stIdB, x.displayName AS nameB, a.displayName AS author";
+                "OPTIONAL MATCH (m)-[:modified]->(n) " +
+                "RETURN DISTINCT(n.dbId) AS dbIdA, n.stId AS stIdA, n.displayName AS nameA, x.dbId AS dbIdB, x.stId AS stIdB, x.displayName AS nameB, a.displayName AS created, m.displayName AS modified " +
+                "ORDER BY created, modified, stIdA, dbIdA, stIdB, dbIdB";
     }
 
     @Override
     void printResult(Result result, Path path) throws IOException {
-        print(result, path, "dbIdA", "stIdA", "nameA", "dbIdB", "stIdB", "nameB", "author");
+        print(result, path, "dbIdA", "stIdA", "nameA", "dbIdB", "stIdB", "nameB", "created", "modified");
     }
 }
 
