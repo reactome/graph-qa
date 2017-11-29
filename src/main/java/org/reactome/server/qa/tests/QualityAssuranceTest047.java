@@ -12,15 +12,13 @@ public class QualityAssuranceTest047 extends QualityAssuranceAbstract {
 
     @Override
     public String getName() {
-        return "OrphanEventsComputationallyInferred";
+        return "InferredOrphanEvents";
     }
 
     @Override
     String getQuery() {
-        return " MATCH (n:Event) " +
-                "WHERE NOT (n)<-[:hasEvent]-() AND " +
-                "      NOT (n:TopLevelPathway) AND " +
-                "      n.isInferred = true " +
+        return " MATCH (n:Event{isInferred:True}) " +
+                "WHERE NOT (n)<-[:hasEvent]-() AND NOT (n:TopLevelPathway) " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
                 "OPTIONAL MATCH (m)-[:modified]->(n) " +
                 "RETURN DISTINCT(n.dbId) AS dbId, n.displayName AS name, n.stId as stId, a.displayName AS created, m.displayName AS modified " +
