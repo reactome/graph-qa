@@ -30,6 +30,7 @@ public class Main {
                         new FlaggedOption(  "user",     JSAP.STRING_PARSER,  "neo4j",           JSAP.REQUIRED,     'u', "user",     "The neo4j user"          ),
                         new FlaggedOption(  "password", JSAP.STRING_PARSER,  "reactome",        JSAP.REQUIRED,     'p', "password", "The neo4j password"      ),
                         new FlaggedOption(  "output",   JSAP.STRING_PARSER,  null,              JSAP.REQUIRED,     'o', "output",   "Output folder"           ),
+                        new FlaggedOption(  "test",     JSAP.STRING_PARSER,  null,              JSAP.NOT_REQUIRED, 't', "test",     "A specific task"         ),
                         new QualifiedSwitch("verbose",  JSAP.BOOLEAN_PARSER, JSAP.NO_DEFAULT,   JSAP.NOT_REQUIRED, 'v', "verbose",  "Requests verbose output" )
                 }
         );
@@ -41,6 +42,7 @@ public class Main {
 
         GeneralService genericService = ReactomeGraphCore.getService(GeneralService.class);
 
+        String qa = config.getString("test");
         Reflections reflections = new Reflections(QualityAssuranceAbstract.class.getPackage().getName());
         Set<Class<?>> tests = reflections.getTypesAnnotatedWith(QATest.class);
 
@@ -54,12 +56,20 @@ public class Main {
             try {
                 Object object = test.newInstance();
                 QualityAssurance qATest = (QualityAssurance) object;
-                if(verbose) System.out.print("\rRunning test " + qATest.getName() + " [" + (i++) + " of " + n + "]");
-                if(qATest.run(genericService, path)) count++;
+                if (qa == null || qATest.getName().equals(qa)) {
+                    if (verbose) {
+                        if (qa == null) System.out.print("\rRunning test " + qATest.getName() + " [" + (i++) + " of " + n + "]");
+                        else System.out.println("Running test " + qATest.getName());
+                    }
+                    if (qATest.run(genericService, path)) count++;
+                }
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
-        if(verbose) System.out.println("\r" + count + " test generated reports.\nPlease check the files to find out more.");
+        if (verbose) {
+            if (qa == null) System.out.println("\rQA finished. " + count + " tests generated reports.\n\nPlease check the files to find out more.");
+            else System.out.println("Test finished.");
+        }
     }
 }
