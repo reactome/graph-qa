@@ -26,7 +26,7 @@ public class QualityAssuranceTest030 extends QualityAssuranceAbstract {
                 "OPTIONAL MATCH (m)-[:modified]->(pe) " +
                 "WITH pe, COUNT(c) as compartments, a, m " +
                 "WHERE compartments > 1 " +
-                "RETURN pe.stId AS PE, pe.displayName AS Name, pe.simpleLabel AS SchemaClass, compartments AS Compartments, a.displayName AS Created, m.displayName AS Modified " +
+                "RETURN pe.stId AS PE, pe.displayName AS Name, pe.schemaClass AS SchemaClass, compartments AS Compartments, a.displayName AS Created, m.displayName AS Modified " +
                 "ORDER BY Created, Modified, pe.speciesName";
     }
 

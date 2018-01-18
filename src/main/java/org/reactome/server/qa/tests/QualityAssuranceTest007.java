@@ -16,21 +16,21 @@ public class QualityAssuranceTest007 extends QualityAssuranceAbstract {
 
     @Override
     public String getName() {
-        return "EventsAndPhysicalEntitiesWithoutStId";
+        return "EntitiesWithoutStId";
     }
 
     @Override
     String getQuery() {
         return " MATCH (n) " +
-                "WHERE (n:Event OR n:PhysicalEntity) AND n.stId is NULL " +
+                "WHERE n.stId IS NULL AND (n:PhysicalEntity OR n:Event OR n:Regulation) " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
                 "OPTIONAL MATCH (m)-[:modified]->(n) " +
-                "RETURN n.dbId AS dbId, n.displayName AS name, a.displayName AS created, m.displayName AS modified " +
-                "ORDER BY created, modified, dbId";
+                "RETURN n.dbId AS Identifier, n.displayName AS Name, n.schemaClass AS SchemaClass, a.displayName AS Created, m.displayName AS Modified " +
+                "ORDER BY Created, Modified, Identifier";
     }
 
     @Override
     void printResult(Result result, Path path) throws IOException {
-        print(result, path, "dbId", "name", "author");
+        print(result, path, "Identifier", "Name", "SchemaClass", "Created", "Modified");
     }
 }

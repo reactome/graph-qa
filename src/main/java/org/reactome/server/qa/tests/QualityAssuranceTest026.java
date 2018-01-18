@@ -16,17 +16,18 @@ public class QualityAssuranceTest026 extends QualityAssuranceAbstract {
 
     @Override
     public String getName() {
-        return "HumanEventsWithCyclicPrecedingEvents";
+        return "CuratedEventsWithCyclicPrecedingEvents";
     }
 
     @Override
     String getQuery() {
-        return " MATCH (n:Event{isInferred:False})-[r:precedingEvent]->(x:Event), " +
+        return " MATCH (n:Event)-[r:precedingEvent]->(x:Event), " +
                 "      (n)<-[e]-(x) " +
+                "WHERE NOT ()-[:inferredTo]->(n) " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
                 "OPTIONAL MATCH (m)-[:modified]->(n) " +
-                "RETURN DISTINCT(n.dbId) AS dbIdA, n.stId AS stIdA, n.displayName AS nameA, x.dbId AS dbIdB, x.stId AS stIdB, x.displayName AS nameB, a.displayName AS created, m.displayName AS modified " +
-                "ORDER BY created, modified, stIdA, dbIdA, stIdB, dbIdB";
+                "RETURN DISTINCT(n.dbId) AS DbIdA, n.stId AS StIdA, n.displayName AS NameA, x.dbId AS DbIdB, x.stId AS StIdB, x.displayName AS NameB, a.displayName AS Created, m.displayName AS Modified " +
+                "ORDER BY Created, Modified, StIdA, DbIdA, StIdB, DbIdB";
     }
 
     @Override

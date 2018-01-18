@@ -1,6 +1,10 @@
 package org.reactome.server.qa.tests;
 
+import org.neo4j.ogm.model.Result;
 import org.reactome.server.qa.annotations.QATest;
+
+import java.io.IOException;
+import java.nio.file.Path;
 
 /**
  * @author Florian Korninger <florian.korninger@ebi.ac.uk>
@@ -12,17 +16,22 @@ public class QualityAssuranceTest020 extends QualityAssuranceAbstract {
 
     @Override
     public String getName() {
-        return "OpenSetsWithoutReferenceEntity";
+        return "CuratedOpenSetsWithoutReferenceEntity";
     }
 
     @Override
     String getQuery() {
-        return " MATCH (n:OpenSet) " +
-                "WHERE NOT (n)-[:referenceEntity]->() " +
-                "OPTIONAL MATCH (a)-[:created]->(n) " +
-                "OPTIONAL MATCH (m)-[:modified]->(n) " +
-                "RETURN n.dbId AS dbId, n.stId AS stId, n.displayName AS name, a.displayName AS created, m.displayName AS modified " +
-                "ORDER BY created, modified, stId, dbId";
+        return " MATCH (os:OpenSet) " +
+                "WHERE NOT ()-[:inferredTo]->(os) AND NOT (os)-[:referenceEntity]->() " +
+                "OPTIONAL MATCH (a)-[:created]->(os) " +
+                "OPTIONAL MATCH (m)-[:modified]->(os) " +
+                "RETURN DISTINCT os.stId AS Identifier, os.displayName AS OpenSet, a.displayName AS Created, m.displayName AS Modified " +
+                "ORDER BY Created, Modified, Identifier";
+    }
+
+    @Override
+    void printResult(Result result, Path path) throws IOException {
+        print(result, path, "Identifier", "OpenSet", "Created", "Modified");
     }
 }
 

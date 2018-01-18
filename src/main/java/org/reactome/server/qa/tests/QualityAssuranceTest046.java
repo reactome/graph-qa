@@ -6,6 +6,7 @@ package org.reactome.server.qa.tests;
  */
 @SuppressWarnings("unused")
 //@QATest
+@Deprecated
 public class QualityAssuranceTest046 extends QualityAssuranceAbstract {
 
     @Override

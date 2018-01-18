@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 /**
- * @author Florian Korninger <florian.korninger@ebi.ac.uk>
  * @author Antonio Fabregat <fabregat@ebi.ac.uk>
  */
 @SuppressWarnings("unused")
@@ -16,22 +15,22 @@ public class QualityAssuranceTest029 extends QualityAssuranceAbstract {
 
     @Override
     public String getName() {
-        return "CompartmentAndGoCellularComponentPointToSameEntry";
+        return "RLEWithoutInput";
     }
 
     @Override
     String getQuery() {
-        return " MATCH (n)-[r:compartment|goCellularComponent]->(x), " +
-                "      (n)-[e]->(x) " +
-                "OPTIONAL MATCH (a)-[:created]->(n) " +
-                "OPTIONAL MATCH (m)-[:modified]->(n) " +
-                "RETURN DISTINCT(n.dbId) AS dbIdA,n.stId AS stIdA, n.displayName AS nameA, x.dbId AS dbIdB, x.stId AS stIdB, x.displayName AS nameB, a.displayName AS created, m.displayName AS modified " +
-                "ORDER BY created, modified, stIdA, dbIdA, stIdB, dbIdB";
+        return " MATCH (rle:ReactionLikeEvent{isInferred:False}) " +
+                "WHERE NOT (rle)-[:input]->() " +
+                "OPTIONAL MATCH (a)-[:created]->(rle) " +
+                "OPTIONAL MATCH (m)-[:modified]->(rle) " +
+                "RETURN rle.stId AS stId, rle.displayName AS name, rle.schemaClass AS SchemaClass, a.displayName AS created, m.displayName AS modified " +
+                "ORDER BY created, modified, stId";
     }
 
     @Override
     void printResult(Result result, Path path) throws IOException {
-        print(result, path, "dbIdA", "stIdA", "nameA", "dbIdB", "stIdB", "nameB", "created", "modified");
+        print(result, path, "stId", "name", "SchemaClass", "created", "modified");
     }
 }
 
