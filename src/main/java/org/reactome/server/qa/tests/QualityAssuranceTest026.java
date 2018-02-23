@@ -32,7 +32,7 @@ public class QualityAssuranceTest026 extends QualityAssuranceAbstract {
 
     @Override
     void printResult(Result result, Path path) throws IOException {
-        print(result, path, "dbIdA", "stIdA", "nameA", "dbIdB", "stIdB", "nameB", "created", "modified");
+        print(result, path, "DbIdA", "StIdA", "NameA", "DbIdB", "StIdB", "NameB", "Created", "Modified");
     }
 }
 
