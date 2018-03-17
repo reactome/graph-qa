@@ -21,7 +21,8 @@ public class QualityAssuranceTest070 extends QualityAssuranceAbstract {
     @Override
     String getQuery() {
         return " MATCH (rle:ReactionLikeEvent) " +
-                "WHERE NOT ()-[:inferredTo]->(rle) AND NOT (rle:BlackBoxEvent) AND NOT (rle)-[:regulatedBy]->() AND (rle)-[:compartment]->() " +
+                "WHERE NOT (rle:BlackBoxEvent) AND NOT (rle)-[:regulatedBy]->() AND (rle)-[:compartment]->() " +
+//                "WHERE NOT ()-[:inferredTo]->(rle) AND NOT (rle:BlackBoxEvent) AND NOT (rle)-[:regulatedBy]->() AND (rle)-[:compartment]->() " +
                 "WITH DISTINCT rle " +
 //                "MATCH (rlec:Compartment)<-[:compartment]-(rle)-[:input|output|requiredInputComponent|catalystActivity|entityFunctionalStatus|physicalEntity|hasComponent|hasMember|hasCandidate|repeatedUnit|compartment*]->(pec:Compartment) " +
                 "MATCH (rlec:Compartment)<-[:compartment]-(rle)-[:input|output|requiredInputComponent|catalystActivity|entityFunctionalStatus|physicalEntity|hasComponent|hasMember|hasCandidate|repeatedUnit*]->(:PhysicalEntity)-[:compartment]->(pec:Compartment) " +

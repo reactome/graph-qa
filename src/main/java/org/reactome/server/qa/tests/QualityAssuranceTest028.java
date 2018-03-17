@@ -21,11 +21,10 @@ public class QualityAssuranceTest028 extends QualityAssuranceAbstract {
 
     @Override
     String getQuery() {
-        return " MATCH (n)-[r:hasMember|hasCandidate]->(x), " +
-                "      (n)-[e]->(x) " +
+        return " MATCH (x:PhysicalEntity)<-[:hasMember]-(n:EntitySet)-[:hasCandidate]->(x) " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
                 "OPTIONAL MATCH (m)-[:modified]->(n) " +
-                "RETURN DISTINCT(n.dbId) AS dbIdA, n.stId AS stIdA, n.displayName AS nameA, x.dbId AS dbIdB, x.stId AS stIdB, x.displayName AS nameB, a.displayName AS created, m.displayName AS modified " +
+                "RETURN DISTINCT n.dbId AS dbIdA, n.stId AS stIdA, n.displayName AS nameA, x.dbId AS dbIdB, x.stId AS stIdB, x.displayName AS nameB, a.displayName AS created, m.displayName AS modified " +
                 "ORDER BY created, modified, stIdA, dbIdA, stIdB, dbIdB";
     }
 

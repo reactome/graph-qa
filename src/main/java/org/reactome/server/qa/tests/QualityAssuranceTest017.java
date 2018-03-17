@@ -20,7 +20,7 @@ public class QualityAssuranceTest017 extends QualityAssuranceAbstract {
 
     @Override
     String getQuery() {
-        return " MATCH (rle:ReactionLikeEvent{isInferred:False}) " +
+        return " MATCH (rle:ReactionLikeEvent) " +
                 "WHERE NOT (rle:FailedReaction) AND NOT (rle)-[:output]->() " +
                 "OPTIONAL MATCH (a)-[:created]->(rle) " +
                 "OPTIONAL MATCH (m)-[:modified]->(rle)  " +

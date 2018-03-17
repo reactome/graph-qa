@@ -16,13 +16,13 @@ public class QualityAssuranceTest020 extends QualityAssuranceAbstract {
 
     @Override
     public String getName() {
-        return "CuratedOpenSetsWithoutReferenceEntity";
+        return "OpenSetsWithoutReferenceEntity";
     }
 
     @Override
     String getQuery() {
         return " MATCH (os:OpenSet) " +
-                "WHERE NOT ()-[:inferredTo]->(os) AND NOT (os)-[:referenceEntity]->() " +
+                "WHERE NOT (os)-[:referenceEntity]->() " +
                 "OPTIONAL MATCH (a)-[:created]->(os) " +
                 "OPTIONAL MATCH (m)-[:modified]->(os) " +
                 "RETURN DISTINCT os.stId AS Identifier, os.displayName AS OpenSet, a.displayName AS Created, m.displayName AS Modified " +

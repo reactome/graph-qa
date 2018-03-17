@@ -15,13 +15,14 @@ public class QualityAssuranceTest059 extends QualityAssuranceAbstract {
 
     @Override
     public String getName() {
-        return "DuplicatedCuratedCandidateSets";
+        return "DuplicatedCandidateSets";
     }
 
     @Override
     String getQuery() {
         return " MATCH (n1c)<-[:compartment]-(n1:CandidateSet)-[:hasMember|hasCandidate]->(:PhysicalEntity)<-[:hasMember|hasCandidate]-(n2:CandidateSet)-[:compartment]->(n2c) " +
-                "WHERE NOT ()-[:inferredTo]->(n1) AND NOT ()-[:inferredTo]->(n2) AND NOT n1 = n2 AND n1c = n2c " +
+                "WHERE NOT n1 = n2 AND n1c = n2c " +
+//                "WHERE NOT ()-[:inferredTo]->(n1) AND NOT ()-[:inferredTo]->(n2) AND NOT n1 = n2 AND n1c = n2c " +
                 "WITH DISTINCT n1, n2 " +
                 "MATCH (n1)-[r1:hasMember|hasCandidate]->(n1pe:PhysicalEntity), " +
                 "      (n2)-[r2:hasMember|hasCandidate]->(n2pe:PhysicalEntity) " +

@@ -25,13 +25,13 @@ public class QualityAssuranceTest045 extends QualityAssuranceAbstract {
                 "WHERE NOT ()-[r:hasComponent|input|output|repeatedUnit|modified|" +
                 "crossReference|author|literatureReference|hasModifiedResidue|precedingEvent|hasMember|summation|psiMod|" +
                 "hasCandidate|hasEvent]-() AND r.stoichiometry > 1 " +
-                "RETURN DISTINCT(n.dbId) AS dbIdA, n.displayName AS nameA, m.dbId AS dbIdB, m.displayName AS nameB, a.displayName AS created " +
+                "RETURN DISTINCT(n.dbId) AS dbIdA, n.displayName AS nameA, TYPE(r) AS relationship, m.dbId AS dbIdB, m.displayName AS nameB, a.displayName AS created " +
                 "ORDER BY created, dbIdA, dbIdB";
     }
 
     @Override
     void printResult(Result result, Path path) throws IOException {
-        print(result, path, "dbIdA", "nameA", "dbIdB", "nameB", "created");
+        print(result, path, "dbIdA", "nameA", "relationship", "dbIdB", "nameB", "created");
     }
 }
 

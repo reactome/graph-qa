@@ -15,13 +15,13 @@ public class QualityAssuranceTest057 extends QualityAssuranceAbstract {
 
     @Override
     public String getName() {
-        return "CuratedComplexesWithOnlyOneComponent";
+        return "ComplexesWithOnlyOneComponent";
     }
 
     @Override
     String getQuery() {
         return " MATCH (c:Complex)-[hc:hasComponent]->(pe:PhysicalEntity) " +
-                "WHERE NOT ()-[:inferredTo]->(c) " +
+//                "WHERE NOT ()-[:inferredTo]->(c) " +
                 "WITH DISTINCT c, SUM(hc.stoichiometry) AS n, COUNT(pe) AS pes " +
                 "WHERE pes = 1 AND n = 1 " +
                 "OPTIONAL MATCH (a)-[:created]->(c) " +

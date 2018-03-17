@@ -1,7 +1,6 @@
 package org.reactome.server.qa.tests;
 
 import org.neo4j.ogm.model.Result;
-import org.reactome.server.qa.annotations.QATest;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -10,7 +9,8 @@ import java.nio.file.Path;
  * @author Antonio Fabregat <fabregat@ebi.ac.uk>
  */
 @SuppressWarnings("unused")
-@QATest
+//@QATest
+@Deprecated
 public class QualityAssuranceTest054 extends QualityAssuranceAbstract {
 
     @Override

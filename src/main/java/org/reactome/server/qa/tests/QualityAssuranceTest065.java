@@ -21,7 +21,8 @@ public class QualityAssuranceTest065 extends QualityAssuranceAbstract {
     @Override
     String getQuery() {
         return " MATCH (es:EntitySet)-[hm:hasMember]->(pe:PhysicalEntity) " +
-                "WHERE NOT ()-[:inferredTo]->(es) AND NOT (es:CandidateSet) AND hm.stoichiometry > 1 " +
+                "WHERE NOT (es:CandidateSet) AND hm.stoichiometry > 1 " +
+//                "      AND NOT ()-[:inferredTo]->(es) " +
                 "WITH DISTINCT es, COLLECT(pe.stId) AS Targets " +
                 "OPTIONAL MATCH (a)-[:created]->(es) " +
                 "OPTIONAL MATCH (m)-[:modified]->(es) " +

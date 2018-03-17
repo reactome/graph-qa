@@ -21,18 +21,19 @@ public class QualityAssuranceTest027 extends QualityAssuranceAbstract {
 
     @Override
     String getQuery() {
-        return " MATCH (n)-[r]->(x), " +
-                "      (n)<-[e]-(x) " +
-                "WHERE NOT (n)-[:author|created|edited|modified|revised|reviewed|inferredTo|precedingEvent]-(x) " +
+        return " MATCH (n)-[r]->(x)-[e]->(n) " +
+                "WHERE NOT TYPE(r) IN [\"hasEncapsulatedEvent\", \"precedingEvent\", \"inferredTo\"] " + //precedingEvent and inferredTo are reported in QA25 and AQ26
+                "      AND TYPE(r) = TYPE(e) " +
+                "      OR NOT (n)-[:author|created|edited|modified|revised|reviewed|inferredTo|hasPart|precedingEvent|hasEncapsulatedEvent]-(x) " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
                 "OPTIONAL MATCH (m)-[:modified]->(n) " +
-                "RETURN DISTINCT(n.dbId) AS dbIdA,n.stId AS stIdA, n.displayName AS nameA, x.dbId AS dbIdB, x.stId AS stIdB, x.displayName AS nameB, a.displayName AS created, m.displayName AS modified " +
+                "RETURN DISTINCT(n.dbId) AS dbIdA,n.stId AS stIdA, n.displayName AS nameA, TYPE(r) AS AtoB, TYPE(e) AS BtoA, x.dbId AS dbIdB, x.stId AS stIdB, x.displayName AS nameB, a.displayName AS created, m.displayName AS modified " +
                 "ORDER BY created, modified, stIdA, dbIdA, stIdB, dbIdB";
     }
 
     @Override
     void printResult(Result result, Path path) throws IOException {
-        print(result, path, "dbIdA", "stIdA", "nameA", "dbIdB", "stIdB", "nameB", "created", "modified");
+        print(result, path, "dbIdA", "stIdA", "nameA", "AtoB", "BtoA", "dbIdB", "stIdB", "nameB", "created", "modified");
     }
 }
 

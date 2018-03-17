@@ -15,16 +15,15 @@ public class QualityAssuranceTest062 extends QualityAssuranceAbstract {
 
     @Override
     public String getName() {
-        return "DuplicatedCuratedReferenceEntities";
+        return "DuplicatedReferenceEntities";
     }
 
     @Override
     String getQuery() {
         return " MATCH (pe1:PhysicalEntity)-[:referenceEntity]->(re1:ReferenceEntity),  " +
                 "      (pe2:PhysicalEntity)-[:referenceEntity]->(re2:ReferenceEntity) " +
-                "WHERE NOT ()-[:inferredTo]->(pe1) " +
-                "      AND NOT ()-[:inferredTo]->(pe2) " +
-                "      AND re1.databaseName = re2.databaseName " +
+//                "WHERE NOT ()-[:inferredTo]->(pe1) AND NOT ()-[:inferredTo]->(pe2) " +
+                "WHERE re1.databaseName = re2.databaseName " +
                 "      AND re1.identifier = re2.identifier " +
                 "      AND (re1.variantIdentifier = re2.variantIdentifier OR (re1.variantIdentifier IS NULL AND re2.variantIdentifier IS NULL)) " +
                 "      AND re1.dbId < re2.dbId " +

@@ -1,6 +1,10 @@
 package org.reactome.server.qa.tests;
 
+import org.neo4j.ogm.model.Result;
 import org.reactome.server.qa.annotations.QATest;
+
+import java.io.IOException;
+import java.nio.file.Path;
 
 /**
  * @author Florian Korninger <florian.korninger@ebi.ac.uk>
@@ -12,16 +16,21 @@ public class QualityAssuranceTest047 extends QualityAssuranceAbstract {
 
     @Override
     public String getName() {
-        return "InferredOrphanEvents";
+        return "OrphanEvents";
     }
 
     @Override
     String getQuery() {
-        return " MATCH (n:Event{isInferred:True}) " +
+        return " MATCH (n:Event) " +
                 "WHERE NOT (n)<-[:hasEvent]-() AND NOT (n:TopLevelPathway) " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
                 "OPTIONAL MATCH (m)-[:modified]->(n) " +
-                "RETURN DISTINCT(n.dbId) AS dbId, n.displayName AS name, n.stId as stId, a.displayName AS created, m.displayName AS modified " +
-                "ORDER BY created, modified, stId, dbId";
+                "RETURN DISTINCT n.stId AS Identifier, n.displayName AS Name, n.isInferred AS Inferred, a.displayName AS Created, m.displayName AS Modified " +
+                "ORDER BY Created, Modified, Identifier";
+    }
+
+    @Override
+    void printResult(Result result, Path path) throws IOException {
+        print(result, path, "Identifier", "Name", "Inferred", "Created", "Modified");
     }
 }

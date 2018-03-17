@@ -15,7 +15,7 @@ public class QualityAssuranceTest029 extends QualityAssuranceAbstract {
 
     @Override
     public String getName() {
-        return "RLEWithoutInput";
+        return "ReactionsLikeEventWithoutInput";
     }
 
     @Override

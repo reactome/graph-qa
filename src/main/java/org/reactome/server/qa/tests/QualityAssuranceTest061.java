@@ -15,13 +15,14 @@ public class QualityAssuranceTest061 extends QualityAssuranceAbstract {
 
     @Override
     public String getName() {
-        return "CuratedEntitySetsWithOnlyOneMember";
+        return "EntitySetsWithOnlyOneMember";
     }
 
     @Override
     String getQuery() {
         return " MATCH (es:EntitySet)-[hm:hasMember]->(pe:PhysicalEntity) " +
-                "WHERE NOT ()-[:inferredTo]->(es) AND NOT (es:CandidateSet) AND NOT (es:OpenSet) " +
+                "WHERE NOT (es:CandidateSet) AND NOT (es:OpenSet) " +
+//                "WHERE NOT ()-[:inferredTo]->(es) AND NOT (es:CandidateSet) AND NOT (es:OpenSet) " +
                 "WITH DISTINCT es, COUNT(DISTINCT pe) AS pes " +
                 "WHERE pes = 1 " +
                 "OPTIONAL MATCH (a)-[:created]->(es) " +
