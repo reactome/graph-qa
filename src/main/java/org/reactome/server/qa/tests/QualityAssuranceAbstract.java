@@ -3,12 +3,12 @@ package org.reactome.server.qa.tests;
 import org.apache.commons.lang3.StringUtils;
 import org.neo4j.ogm.model.Result;
 import org.reactome.server.graph.service.GeneralService;
+import org.reactome.server.qa.utils.FileUtils;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,45 +20,46 @@ import java.util.Map;
  */
 public abstract class QualityAssuranceAbstract implements QualityAssurance {
 
-    private static final String PREFIX = "QATest";
+    @Override
+    public final String getName() {
+        return getClass().getSimpleName().split("_", 2)[1];
+    }
+
+    @Override
+    public final String getNumeratedName() {
+        return getPrefix() + getName();
+    }
+
+    private String getOrder() {
+        return getClass().getSimpleName().split("_", 2)[0].replaceAll("\\D+", "");
+    }
 
     abstract String getQuery();
 
-    Boolean doTest() {
-        return true;
-    }
-
-    @SuppressWarnings({"SameReturnValue", "WeakerAccess"})
-    protected Map getMap() {
+    @SuppressWarnings("WeakerAccess")
+    protected Map getQueryParameters() {
         return Collections.EMPTY_MAP;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean run(GeneralService genericService, String path) {
-        if (doTest()) {
-            Result result = genericService.query(getQuery(), getMap());
-            if (result == null || !result.iterator().hasNext()) return false;
-            try {
-                printResult(result, createFile(path));
-                return true;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    public int run(GeneralService genericService, String path) {
+        Result result = genericService.query(getQuery(), getQueryParameters());
+        if (result == null || !result.iterator().hasNext()) return 0;
+        try {
+            return report(result, FileUtils.getFilePath(path, getNumeratedName()));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return false;
+        return 0;
     }
 
-    void printResult(Result result, Path path) throws IOException {
-        print(result, path, "dbId", "stId", "name", "created", "modified");
-    }
-
-    void print(Result result, Path path, String... attributes) throws IOException {
+    private int report(Result result, Path path) throws IOException {
         List<String> lines = new ArrayList<>();
-        lines.add(StringUtils.join(attributes, ","));
+        lines.add("\"" + StringUtils.join(getHeader(), "\",\"") + "\"");
         for (Map<String, Object> map : result) {
             List<String> line = new ArrayList<>();
-            for (String attribute : attributes) {
+            for (String attribute : getHeader()) {
                 // Some results might be list of elements. In some cases we use REDUCE and the output looks like
                 // ["a", "b", "c", ] and we want it to look like ["a", "b", "c"].
                 //               ^ we remove this comma and the space after it
@@ -76,17 +77,10 @@ public abstract class QualityAssuranceAbstract implements QualityAssurance {
             lines.add(StringUtils.join(line, ","));
         }
         Files.write(path, lines, Charset.forName("UTF-8"));
-    }
-
-    private Path createFile(String path) throws IOException {
-        Path p = Paths.get(path + getPrefix() + getName() + ".csv");
-        Files.deleteIfExists(p);
-        if(!Files.isSymbolicLink(p.getParent())) Files.createDirectories(p.getParent());
-        Files.createFile(p);
-        return p;
+        return lines.size() - 1;
     }
 
     private String getPrefix() {
-        return PREFIX + this.getClass().getSimpleName().replaceAll("\\D+", "") + "-";
+        return "GT" + getOrder() + "-";
     }
 }

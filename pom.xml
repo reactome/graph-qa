@@ -18,15 +18,15 @@
 
     <developers>
         <developer>
-            <id>fkorn</id>
-            <name>Florian Korninger</name>
-            <email>fkorn@ebi.ac.uk</email>
-            <organization>http://www.ebi.ac.uk/</organization>
-        </developer>
-        <developer>
             <id>fabregat</id>
             <name>Antonio Fabregat</name>
             <email>fabregat@ebi.ac.uk</email>
+            <organization>http://www.ebi.ac.uk/</organization>
+        </developer>
+        <developer>
+            <id>fkorn</id>
+            <name>Florian Korninger</name>
+            <email>fkorn@ebi.ac.uk</email>
             <organization>http://www.ebi.ac.uk/</organization>
         </developer>
     </developers>
@@ -34,7 +34,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <graph.core.version>0.1.0-SNAPSHOT</graph.core.version>
+        <graph.core.version>1.1.7-SNAPSHOT</graph.core.version>
         <jasp.version>2.1</jasp.version>
         <maven.compiler.version>3.5.1</maven.compiler.version>
         <jdk.version>1.8</jdk.version>
