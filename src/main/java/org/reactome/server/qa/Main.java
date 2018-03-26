@@ -100,7 +100,7 @@ public class Main {
                 e.printStackTrace();
             }
         } else {
-            System.err.println("\nThe test '" + test + "' cannot be found. Please check the same and try again.");
+            System.err.println("\nThe test '" + test + "' cannot be found. Please check the name and try again.");
             System.exit(1);
         }
         return reports;
