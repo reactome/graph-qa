@@ -31,7 +31,7 @@ public class T007_EntitiesWithoutStId extends QualityAssuranceAbstract {
     @Override
     String getQuery() {
         return " MATCH (n) " +
-                "WHERE n.stId IS NULL AND (n:PhysicalEntity OR n:Event OR n:Regulation) " +
+                "WHERE n.stId IS NULL AND (n:PhysicalEntity OR n:Event) " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
                 "OPTIONAL MATCH (m)-[:modified]->(n) " +
                 "RETURN n.dbId AS Identifier, n.displayName AS Name, n.schemaClass AS SchemaClass, a.displayName AS Created, m.displayName AS Modified " +
