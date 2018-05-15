@@ -15,7 +15,7 @@ public class T007_EntitiesWithoutStId extends QualityAssuranceAbstract {
 
     @Override
     public String getDescription() {
-        return "Event, PhysicalEntity or Regulation classes intances where stableIdentifier slot is empty";
+        return "Event and PhysicalEntity class instances where stableIdentifier slot is empty";
     }
 
     @Override
