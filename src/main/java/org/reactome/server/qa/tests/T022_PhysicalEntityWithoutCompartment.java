@@ -20,7 +20,7 @@ public class T022_PhysicalEntityWithoutCompartment extends QualityAssuranceAbstr
 
     @Override
     public QAPriority getPriority() {
-        return QAPriority.HIGH;
+        return QAPriority.BLOCKER;
     }
 
     @Override
@@ -30,11 +30,11 @@ public class T022_PhysicalEntityWithoutCompartment extends QualityAssuranceAbstr
 
     @Override
     String getQuery() {
-        return " MATCH (n:PhysicalEntity) " +
-                "WHERE NOT (n)-[:compartment]-() " +
-                "OPTIONAL MATCH (a)-[:created]->(n) " +
-                "OPTIONAL MATCH (m)-[:modified]->(n) " +
-                "RETURN n.dbId AS dbId, n.stId AS stId, n.displayName AS Name, a.displayName AS Created, m.displayName AS Modified " +
+        return " MATCH (pe:PhysicalEntity) " +
+                "WHERE NOT (pe)-[:compartment]->(:Compartment) " +
+                "OPTIONAL MATCH (a)-[:created]->(pe) " +
+                "OPTIONAL MATCH (m)-[:modified]->(pe) " +
+                "RETURN pe.dbId AS dbId, pe.stId AS stId, pe.displayName AS Name, a.displayName AS Created, m.displayName AS Modified " +
                 "ORDER BY Created, Modified, dbId";
     }
 }
