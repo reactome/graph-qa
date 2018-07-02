@@ -30,7 +30,7 @@ public class T009_ComplexWithoutComponents extends QualityAssuranceAbstract {
 
     @Override
     String getQuery() {
-        return " MATCH (n:Component) " +
+        return " MATCH (n:Complex) " +
                 "WHERE NOT (n)-[:hasComponent]->() " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
                 "OPTIONAL MATCH (m)-[:modified]->(n) " +
