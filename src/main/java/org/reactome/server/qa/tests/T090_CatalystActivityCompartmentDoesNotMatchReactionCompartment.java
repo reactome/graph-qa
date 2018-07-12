@@ -29,7 +29,7 @@ public class T090_CatalystActivityCompartmentDoesNotMatchReactionCompartment ext
 
     @Override
     String getQuery() {
-        return " MATCH (crle:Compartment)<-[:compartment]-(rle:ReactionLikeEvent{isInferred:False})-[:catalystActivity|physicalEntity|compartment*]->(cac:Compartment) " +
+        return " MATCH (crle:Compartment)<-[:compartment]-(rle:ReactionLikeEvent{isInferred:False})-[:catalystActivity|physicalEntity*]->(:PhysicalEntity)-[:compartment]->(cac:Compartment) " +
                 "WITH DISTINCT rle, COLLECT(crle) AS crles, COLLECT(cac) AS cacs " +
                 "WHERE NONE(c IN cacs WHERE c IN crles) OR NONE(c IN crles WHERE c IN cacs) " +
                 "OPTIONAL MATCH (a)-[:created]->(rle) " +
