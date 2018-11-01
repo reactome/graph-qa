@@ -61,7 +61,7 @@ public class Main {
         Long start = System.currentTimeMillis();
         List<Report> reports = (qa == null) ? runAllTests() : runSingleTest(qa);
         //Reports have to be stored and printed in the screen (when VERBOSE)
-        storeReports(path, "GraphQA_Summary_v" + genericService.getDBVersion(), reports);
+        storeReports(path, "GraphQA_Summary_v" + genericService.getDBInfo().getVersion(), reports);
         Long time = System.currentTimeMillis() - start;
 
         printReports(reports, time);
