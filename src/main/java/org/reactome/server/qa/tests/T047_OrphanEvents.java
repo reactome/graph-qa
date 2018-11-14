@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author Florian Korninger <florian.korninger@ebi.ac.uk>
  * @author Antonio Fabregat <fabregat@ebi.ac.uk>
+ * @author Florian Korninger <florian.korninger@ebi.ac.uk>
  */
 @SuppressWarnings("unused")
 @QATest
@@ -30,11 +30,13 @@ public class T047_OrphanEvents extends QualityAssuranceAbstract {
 
     @Override
     String getQuery() {
-        return " MATCH (n:Event) " +
-                "WHERE NOT (n)<-[:hasEvent]-() AND NOT (n:TopLevelPathway) " +
-                "OPTIONAL MATCH (a)-[:created]->(n) " +
-                "OPTIONAL MATCH (m)-[:modified]->(n) " +
-                "RETURN DISTINCT n.stId AS Identifier, n.displayName AS Name, n.isInferred AS Inferred, a.displayName AS Created, m.displayName AS Modified " +
+        return " MATCH (e:Event) " +
+                "WHERE NOT (e)-[:inferredTo]->() " +
+                "      AND NOT (e)<-[:hasEvent]-() " +
+                "      AND NOT (e:TopLevelPathway) " +
+                "OPTIONAL MATCH (a)-[:created]->(e) " +
+                "OPTIONAL MATCH (m)-[:modified]->(e) " +
+                "RETURN DISTINCT e.stId AS Identifier, e.displayName AS Name, e.isInferred AS Inferred, a.displayName AS Created, m.displayName AS Modified " +
                 "ORDER BY Created, Modified, Identifier";
     }
 }
