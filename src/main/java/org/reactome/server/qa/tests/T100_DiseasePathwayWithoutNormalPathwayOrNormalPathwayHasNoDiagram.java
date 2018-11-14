@@ -24,7 +24,7 @@ public class T100_DiseasePathwayWithoutNormalPathwayOrNormalPathwayHasNoDiagram 
 
     @Override
     public List<String> getHeader() {
-        return Arrays.asList("Identifier", "Reaction", "Created", "Modified");
+        return Arrays.asList("Identifier", "DiseasePathway", "Created", "Modified");
     }
 
     @Override
@@ -35,7 +35,7 @@ public class T100_DiseasePathwayWithoutNormalPathwayOrNormalPathwayHasNoDiagram 
                 "      OR (dp)-[:normalPathway]->(:Pathway{hasDiagram:False})) " +
                 "OPTIONAL MATCH (a)-[:created]->(dp) " +
                 "OPTIONAL MATCH (m)-[:modified]->(dp) " +
-                "RETURN DISTINCT dp.stId AS identifier, dp.displayName AS DiseasePathway, a.displayName AS created, m.displayName AS modified " +
-                "ORDER BY created, modified, identifier";
+                "RETURN DISTINCT dp.stId AS Identifier, dp.displayName AS DiseasePathway, a.displayName AS Created, m.displayName AS Modified " +
+                "ORDER BY Created, Modified, Identifier";
     }
 }
