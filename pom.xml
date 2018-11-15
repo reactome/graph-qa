@@ -4,10 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.reactome.server.qa</groupId>
-    <artifactId>qa-module</artifactId>
+    <artifactId>garph-qa</artifactId>
 
     <packaging>jar</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>graph-qa</name>
 
     <description>The QA tests are meant to check the integrity of the data imported into the graph database</description>
