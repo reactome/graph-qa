@@ -33,7 +33,7 @@ public class T033_OtherRelationsThatPointToTheSameEntry extends QualityAssurance
         return " MATCH (n)-[r]->(x), " +
                 "      (n)-[e]->(x) " +
                 "WHERE NOT (n)-[:author|created|edited|modified|revised|reviewed|input|output|entityOnOtherCell|" +
-                "hasComponent|requiredInputComponent|physicalEntity|activeUnit|reverseReaction|precedingEvent|hasEvent|" +
+                "hasComponent|requiredInputComponent|physicalEntity|diseaseEntity|activeUnit|reverseReaction|precedingEvent|hasEvent|" +
                 "goCellularComponent|compartment|referenceSequence|secondReferenceSequence|hasCandidate|hasMember]-(x) " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
                 "OPTIONAL MATCH (m)-[:modified]->(n) " +
