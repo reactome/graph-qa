@@ -31,9 +31,10 @@ public class T047_OrphanEvents extends QualityAssuranceAbstract {
     @Override
     String getQuery() {
         return " MATCH (e:Event) " +
-                "WHERE NOT (e)-[:inferredTo]->() " +
-                "      AND NOT (e)<-[:hasEvent]-() " +
-                "      AND NOT (e:TopLevelPathway) " +
+                "WHERE NOT (e:TopLevelPathway) AND " +
+                "      NOT (e)-[:inferredTo]->() AND " +
+                "      NOT (e)<-[:normalReaction]-() AND " +
+                "      NOT (e)<-[:hasEvent]-() " +
                 "OPTIONAL MATCH (a)-[:created]->(e) " +
                 "OPTIONAL MATCH (m)-[:modified]->(e) " +
                 "RETURN DISTINCT e.stId AS Identifier, e.displayName AS Name, e.isInferred AS Inferred, a.displayName AS Created, m.displayName AS Modified " +
