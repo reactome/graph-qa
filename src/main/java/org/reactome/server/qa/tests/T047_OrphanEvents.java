@@ -33,7 +33,7 @@ public class T047_OrphanEvents extends QualityAssuranceAbstract {
         return " MATCH (e:Event) " +
                 "WHERE NOT (e:TopLevelPathway) AND " +
                 "      NOT (e)-[:inferredTo]->() AND " +
-                "      NOT (e)<-[:normalReaction]-() AND " +
+                //"      NOT (e)<-[:normalReaction]-() AND " +
                 "      NOT (e)<-[:hasEvent]-() " +
                 "OPTIONAL MATCH (a)-[:created]->(e) " +
                 "OPTIONAL MATCH (m)-[:modified]->(e) " +
