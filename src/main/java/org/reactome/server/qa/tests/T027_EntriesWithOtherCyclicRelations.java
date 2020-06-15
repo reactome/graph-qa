@@ -31,9 +31,9 @@ public class T027_EntriesWithOtherCyclicRelations extends QualityAssuranceAbstra
     @Override
     String getQuery() {
         return " MATCH (n)-[r]->(x)-[e]->(n) " +
-                "WHERE NOT TYPE(r) IN [\"hasEncapsulatedEvent\", \"precedingEvent\", \"inferredTo\"] " + //precedingEvent and inferredTo are reported in QA25 and AQ26
+                "WHERE NOT TYPE(r) IN [\"hasEncapsulatedEvent\", \"precedingEvent\", \"inferredTo\", \"surroundedBy\", \"instanceOf\"] " + //precedingEvent and inferredTo are reported in QA25 and AQ26 //surroundedBy and instanceOf QAT101
                 "      AND TYPE(r) = TYPE(e) " +
-                "      OR NOT (n)-[:author|created|edited|modified|revised|reviewed|inferredTo|hasPart|precedingEvent|hasEncapsulatedEvent]-(x) " +
+                "      OR NOT (n)-[:author|created|edited|modified|revised|reviewed|inferredTo|hasPart|precedingEvent|hasEncapsulatedEvent|surroundedBy|instanceOf]-(x) " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
                 "OPTIONAL MATCH (m)-[:modified]->(n) " +
                 "RETURN DISTINCT(n.dbId) AS dbIdA,n.stId AS stIdA, n.displayName AS NameA, TYPE(r) AS AtoB, TYPE(e) AS BtoA, x.dbId AS dbIdB, x.stId AS stIdB, x.displayName AS NameB, a.displayName AS Created, m.displayName AS Modified " +
