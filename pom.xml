@@ -34,10 +34,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <graph.core.version>1.1.21</graph.core.version>
+        <graph.core.version>2.0.0-SNAPSHOT</graph.core.version>
         <jasp.version>2.1</jasp.version>
         <maven.compiler.version>3.5.1</maven.compiler.version>
-        <jdk.version>1.8</jdk.version>
+        <jdk.version>11</jdk.version>
+        <commons-io.version>2.8.0</commons-io.version>
     </properties>
 
     <dependencies>
@@ -47,26 +48,48 @@
             <artifactId>graph-core</artifactId>
             <version>${graph.core.version}</version>
         </dependency>
-            <!--Jasp console reader-->
-            <dependency>
-                <groupId>com.martiansoftware</groupId>
-                <artifactId>jsap</artifactId>
-                <version>${jasp.version}</version>
-            </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
+
+        <!--Jasp console reader-->
+        <dependency>
+            <groupId>com.martiansoftware</groupId>
+            <artifactId>jsap</artifactId>
+            <version>${jasp.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
     <finalName>${project.name}</finalName>
         <plugins>
-    <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven.compiler.version}</version>
-        <configuration>
-            <source>${jdk.version}</source>
-            <target>${jdk.version}</target>
-        </configuration>
-    </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                    <mainClass>org.reactome.server.qa.Main</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
