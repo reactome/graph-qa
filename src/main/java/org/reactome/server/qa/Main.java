@@ -11,7 +11,6 @@ import org.reactome.server.qa.utils.FileUtils;
 import org.reactome.server.qa.utils.ProgressBar;
 import org.reactome.server.qa.utils.Report;
 import org.reflections.Reflections;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +24,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-@SpringBootApplication
 public class Main {
 
     private static Boolean VERBOSE;
