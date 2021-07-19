@@ -23,7 +23,7 @@ mvn clean package spring-boot:repackage
 #### How to EXECUTE ?
 
 ```console
-java -jar target/graph-qa.jar -v -p <neo4j_password>
+java -jar target/graph-qa-exec.jar -v -p <neo4j_password>
 ```
 
 #### Project usage: 
