@@ -7,7 +7,7 @@
     <artifactId>graph-qa</artifactId>
 
     <packaging>jar</packaging>
-    <version>1.0.0</version>
+    <version>1.1.0-SNAPSHOT</version>
     <name>graph-qa</name>
 
     <description>The QA tests are meant to check the integrity of the data imported into the graph database</description>
@@ -32,14 +32,16 @@
     </developers>
 
     <properties>
+        <jdk.version>11</jdk.version>
+        <main.class>org.reactome.server.qa.Main</main.class>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <graph.core.version>2.0.0-SNAPSHOT</graph.core.version>
-        <jasp.version>2.1</jasp.version>
-        <maven.compiler.version>3.5.1</maven.compiler.version>
-        <jdk.version>11</jdk.version>
         <commons-io.version>2.8.0</commons-io.version>
-        <main.class>org.reactome.server.qa.Main</main.class>
+        <jasp.version>2.1</jasp.version>
+
+        <spring.boot.version>2.5.3</spring.boot.version>
+        <maven.compiler.version>3.5.1</maven.compiler.version>
     </properties>
 
     <dependencies>
@@ -70,6 +72,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
                 <configuration>
                     <fork>true</fork>
                     <mainClass>${main.class}</mainClass>
