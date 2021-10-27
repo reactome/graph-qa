@@ -1,7 +1,6 @@
 package org.reactome.server.qa.tests;
 
 import org.apache.commons.lang3.StringUtils;
-import org.neo4j.ogm.model.Result;
 import org.reactome.server.graph.service.GeneralService;
 import org.reactome.server.qa.utils.FileUtils;
 
@@ -9,10 +8,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Florian Korninger <florian.korninger@ebi.ac.uk>
@@ -44,7 +40,7 @@ public abstract class QualityAssuranceAbstract implements QualityAssurance {
     @SuppressWarnings("unchecked")
     @Override
     public int run(GeneralService genericService, String path) {
-        Result result = genericService.query(getQuery(), getQueryParameters());
+        Collection<Map<String, Object>> result = genericService.query(getQuery(), getQueryParameters());
         if (result == null || !result.iterator().hasNext()) return 0;
         try {
             return report(result, FileUtils.getFilePath(path, getNumeratedName()));
@@ -54,7 +50,7 @@ public abstract class QualityAssuranceAbstract implements QualityAssurance {
         return 0;
     }
 
-    private int report(Result result, Path path) throws IOException {
+    private int report(Collection<Map<String, Object>> result, Path path) throws IOException {
         List<String> lines = new ArrayList<>();
         lines.add("\"" + StringUtils.join(getHeader(), "\",\"") + "\"");
         for (Map<String, Object> map : result) {
