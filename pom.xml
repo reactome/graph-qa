@@ -7,13 +7,19 @@
     <artifactId>graph-qa</artifactId>
 
     <packaging>jar</packaging>
-    <version>1.1.2</version>
+    <version>1.1.3</version>
     <name>graph-qa</name>
+
+    <parent>
+        <groupId>org.reactome.server</groupId>
+        <artifactId>reactome-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
 
     <description>The QA tests are meant to check the integrity of the data imported into the graph database</description>
     <organization>
         <name>The European Bioinformatics Institute</name>
-        <url>http://www.ebi.ac.uk/</url>
+        <url>https://www.ebi.ac.uk/</url>
     </organization>
 
     <developers>
@@ -21,27 +27,20 @@
             <id>fabregat</id>
             <name>Antonio Fabregat</name>
             <email>fabregat@ebi.ac.uk</email>
-            <organization>http://www.ebi.ac.uk/</organization>
+            <organization>https://www.ebi.ac.uk/</organization>
         </developer>
         <developer>
             <id>fkorn</id>
             <name>Florian Korninger</name>
             <email>fkorn@ebi.ac.uk</email>
-            <organization>http://www.ebi.ac.uk/</organization>
+            <organization>https://www.ebi.ac.uk/</organization>
         </developer>
     </developers>
 
     <properties>
-        <jdk.version>11</jdk.version>
+
         <main.class>org.reactome.server.qa.Main</main.class>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <graph.core.version>2.0.3</graph.core.version>
-        <commons-io.version>2.8.0</commons-io.version>
-        <jasp.version>2.1</jasp.version>
-
-        <spring.boot.version>2.6.6</spring.boot.version>
-        <maven.compiler.version>3.5.1</maven.compiler.version>
     </properties>
 
     <dependencies>
@@ -49,20 +48,17 @@
         <dependency>
             <groupId>org.reactome.server.graph</groupId>
             <artifactId>graph-core</artifactId>
-            <version>${graph.core.version}</version>
         </dependency>
 
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>${commons-io.version}</version>
         </dependency>
 
         <!--Jasp console reader-->
         <dependency>
             <groupId>com.martiansoftware</groupId>
             <artifactId>jsap</artifactId>
-            <version>${jasp.version}</version>
         </dependency>
     </dependencies>
 
@@ -72,7 +68,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.boot.version}</version>
+                <version>${spring-boot.version}</version>
                 <configuration>
                     <fork>true</fork>
                     <mainClass>${main.class}</mainClass>
@@ -91,8 +87,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.version}</version>
                 <configuration>
-                    <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
         </plugins>
