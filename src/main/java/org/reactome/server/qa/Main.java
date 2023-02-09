@@ -11,6 +11,7 @@ import org.reactome.server.qa.utils.FileUtils;
 import org.reactome.server.qa.utils.ProgressBar;
 import org.reactome.server.qa.utils.Report;
 import org.reflections.Reflections;
+import org.reflections.util.ConfigurationBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -138,7 +139,7 @@ public class Main {
         //ReactomeGraphCore has to be initialised before services can be instantiated
         genericService = ReactomeGraphCore.getService(GeneralService.class);
 
-        Reflections reflections = new Reflections(QualityAssuranceAbstract.class.getPackage().getName());
+        Reflections reflections = new Reflections(new ConfigurationBuilder().forPackages(QualityAssuranceAbstract.class.getPackage().getName()));
         Set<Class<?>> tests = reflections.getTypesAnnotatedWith(QATest.class);
         sortedTests = tests.stream().filter(c -> c.getAnnotation(Deprecated.class) == null)
                 .sorted(Comparator.comparing(Class::getSimpleName)) // Sorting tests by name
