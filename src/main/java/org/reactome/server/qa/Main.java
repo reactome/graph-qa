@@ -74,7 +74,8 @@ public class Main {
                 if (VERBOSE) ProgressBar.updateProgressBar(qATest.getName(), i++, n);
                 int result = qATest.run(genericService, path);
                 reports.add(new Report(qATest, result));
-            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
+                     InvocationTargetException e) {
                 e.printStackTrace();
             }
         }
@@ -92,7 +93,8 @@ public class Main {
                 int result = qATest.run(genericService, path);
                 reports.add(new Report(qATest, result));
                 if (VERBOSE) System.out.print(" Done.");
-            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
+                     InvocationTargetException e) {
                 e.printStackTrace();
             }
         } else {
