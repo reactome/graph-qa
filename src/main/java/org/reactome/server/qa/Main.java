@@ -36,12 +36,13 @@ public class Main {
 
         SimpleJSAP jsap = new SimpleJSAP(Main.class.getName(), "A tool for testing the integrity and consistency of the data imported in the existing graph database",
                 new Parameter[]{
-                        new FlaggedOption(  "host",     JSAP.STRING_PARSER,  "bolt://localhost:7687",   JSAP.REQUIRED,     'h', "host",     "The neo4j host"          ),
-                        new FlaggedOption(  "user",     JSAP.STRING_PARSER,  "neo4j",                   JSAP.REQUIRED,     'u', "user",     "The neo4j user"          ),
-                        new FlaggedOption(  "password", JSAP.STRING_PARSER,  "reactome",                JSAP.REQUIRED,     'p', "password", "The neo4j password"      ),
-                        new FlaggedOption(  "output",   JSAP.STRING_PARSER,  "./reports",               JSAP.REQUIRED,     'o', "output",   "Output folder"           ),
-                        new FlaggedOption(  "test",     JSAP.STRING_PARSER,  null,                      JSAP.NOT_REQUIRED, 't', "test",     "A specific task"         ),
-                        new QualifiedSwitch("verbose",  JSAP.BOOLEAN_PARSER, JSAP.NO_DEFAULT,               JSAP.NOT_REQUIRED, 'v', "verbose",  "Requests verbose output" )
+                        new FlaggedOption("host", JSAP.STRING_PARSER, "bolt://localhost:7687", JSAP.REQUIRED, 'h', "host", "The neo4j host"),
+                        new FlaggedOption("user", JSAP.STRING_PARSER, "neo4j", JSAP.REQUIRED, 'u', "user", "The neo4j user"),
+                        new FlaggedOption("password", JSAP.STRING_PARSER, "reactome", JSAP.REQUIRED, 'p', "password", "The neo4j password"),
+                        new FlaggedOption("databaseName", JSAP.STRING_PARSER, "graph.db", JSAP.NOT_REQUIRED, 'n', "dbName", "The neo4j database name"),
+                        new FlaggedOption("output", JSAP.STRING_PARSER, "./reports", JSAP.REQUIRED, 'o', "output", "Output folder"),
+                        new FlaggedOption("test", JSAP.STRING_PARSER, null, JSAP.NOT_REQUIRED, 't', "test", "A specific task"),
+                        new QualifiedSwitch("verbose", JSAP.BOOLEAN_PARSER, JSAP.NO_DEFAULT, JSAP.NOT_REQUIRED, 'v', "verbose", "Requests verbose output")
                 }
         );
         JSAPResult config = jsap.parse(args);
@@ -131,7 +132,8 @@ public class Main {
         ReactomeGraphCore.initialise(
                 config.getString("host"),
                 config.getString("user"),
-                config.getString("password"));
+                config.getString("password"),
+                config.getString("databaseName"));
 
         //ReactomeGraphCore has to be initialised before services can be instantiated
         genericService = ReactomeGraphCore.getService(GeneralService.class);
