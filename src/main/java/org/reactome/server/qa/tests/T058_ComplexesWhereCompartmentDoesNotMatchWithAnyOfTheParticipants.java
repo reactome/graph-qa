@@ -30,7 +30,7 @@ public class T058_ComplexesWhereCompartmentDoesNotMatchWithAnyOfTheParticipants 
     @Override
     String getQuery() {
         return " MATCH (c:Complex)-[:compartment]->(cc:Compartment), " +
-                "      (c)-[:hasComponent|hasMember|hasCandidate|repeatedUnit*]->(pe:PhysicalEntity)-[:compartment]->(pc:Compartment) " +
+                "      (c)-[:hasComponent|hasMember|hasCandidate|repeatedUnit|proteinMarker|RNAMarker*]->(pe:PhysicalEntity)-[:compartment]->(pc:Compartment) " +
 //                "WHERE NOT ()-[:inferredTo]->(c) " +
                 "WITH c, COLLECT(DISTINCT cc) AS ccs, COLLECT(DISTINCT pc) AS pcs " +
                 "WHERE NONE(c IN ccs WHERE c IN pcs) " +

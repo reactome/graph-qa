@@ -32,7 +32,7 @@ public class T070_ReactionsWithoutRegulatorWithMoreCompartmentsThanItsParticipan
         return " MATCH (rle:ReactionLikeEvent) " +
                 "WHERE NOT (rle:BlackBoxEvent) AND NOT (rle)-[:regulatedBy]->() AND (rle)-[:compartment]->() " +
                 "WITH DISTINCT rle " +
-                "MATCH (rlec:Compartment)<-[:compartment]-(rle)-[:input|output|requiredInputComponent|catalystActivity|physicalEntity|entityFunctionalStatus|diseaseEntity|hasComponent|hasMember|hasCandidate|repeatedUnit*]->(:PhysicalEntity)-[:compartment]->(pec:Compartment) " +
+                "MATCH (rlec:Compartment)<-[:compartment]-(rle)-[:input|output|requiredInputComponent|catalystActivity|physicalEntity|entityFunctionalStatus|diseaseEntity|hasComponent|hasMember|hasCandidate|repeatedUnit|proteinMarker|RNAMarker*]->(:PhysicalEntity)-[:compartment]->(pec:Compartment) " +
                 "WITH rle, COLLECT(DISTINCT rlec.displayName) AS rlecs, COLLECT(DISTINCT pec.displayName) AS pecs " +
                 "WHERE ANY(c IN rlecs WHERE NOT c IN pecs) " +
                 "OPTIONAL MATCH (a)-[:created]->(rle) " +
