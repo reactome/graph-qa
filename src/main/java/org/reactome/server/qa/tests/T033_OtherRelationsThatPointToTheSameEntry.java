@@ -34,7 +34,7 @@ public class T033_OtherRelationsThatPointToTheSameEntry extends QualityAssurance
                 "      (n)-[e]->(x) " +
                 "WHERE NOT (n)-[:author|created|edited|modified|revised|reviewed|input|output|entityOnOtherCell|" +
                 "hasComponent|requiredInputComponent|physicalEntity|diseaseEntity|activeUnit|reverseReaction|precedingEvent|hasEvent|" +
-                "goCellularComponent|compartment|referenceSequence|secondReferenceSequence|hasCandidate|hasMember]-(x) " +
+                "goCellularComponent|compartment|referenceSequence|secondReferenceSequence|hasCandidate|hasMemberproteinMarker|RNAMarker]-(x) " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
                 "OPTIONAL MATCH (m)-[:modified]->(n) " +
                 "RETURN DISTINCT n.dbId AS dbIdA, n.stId AS stIdA, n.displayName AS NameA, x.dbId AS dbIdB, x.stId AS stIdB, x.displayName AS NameB, a.displayName AS Created, m.displayName AS Modified " +
