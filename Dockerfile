@@ -1,4 +1,4 @@
-ARG REPO_DIR=/opt/doi-suggester
+ARG REPO_DIR=/opt/graph-qa
 
 
 # ===== stage 1 =====
@@ -32,7 +32,7 @@ FROM eclipse-temurin:11-jre-focal
 
 ARG REPO_DIR
 
-ARG JAR_FILE=target/doi-suggester-*-jar-with-dependencies.jar
+ARG JAR_FILE=target/graph-qa-exec.jar
 
 WORKDIR ${REPO_DIR}
 

@@ -1,4 +1,4 @@
-name: doi-suggester ci
+name: graph-qa ci
 
 on:
     workflow_dispatch: 
@@ -8,7 +8,7 @@ on:
             - synchronize 
     push:
         branches:
-            - main
+            - master
 
 permissions:
     id-token: write
@@ -19,7 +19,7 @@ jobs:
         if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
         runs-on: ubuntu-latest
         env:
-            REPO_DIR: /opt/doi-suggester
+            REPO_DIR: /opt/graph-qa
         steps:
             - uses: actions/checkout@v4
 
@@ -55,7 +55,7 @@ jobs:
                 path: /tmp/image.tar
 
     docker-push:
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         needs: docker-build
         runs-on: ubuntu-latest
         steps:
@@ -84,7 +84,7 @@ jobs:
             - env:
                 AWS_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
                 AWS_REGISTRY_ALIAS: k2y5k6e2
-                AWS_REPO: doi-suggester
+                AWS_REPO: graph-qa
                 IMG_TAG: ${{ steps.get-hash.outputs.SHORT_SHA }}
               run: |
                 AWS_URI=$AWS_REGISTRY/$AWS_REGISTRY_ALIAS/$AWS_REPO
