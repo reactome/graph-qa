@@ -6,15 +6,15 @@
 	<groupId>org.reactome.server.qa</groupId>
 	<artifactId>graph-qa</artifactId>
 
-	<packaging>jar</packaging>
-	<version>1.1.6</version>
-	<name>graph-qa</name>
+    <packaging>jar</packaging>
+    <version>1.1.7</version>
+    <name>graph-qa</name>
 
-	<parent>
-		<groupId>org.reactome.maven</groupId>
-		<artifactId>reactome-parent</artifactId>
-		<version>1.0.3</version>
-	</parent>
+    <parent>
+        <groupId>org.reactome.maven</groupId>
+        <artifactId>reactome-parent</artifactId>
+        <version>1.0.5</version>
+    </parent>
 
 	<description>The QA tests are meant to check the integrity of the data imported into the graph database</description>
 	<organization>
