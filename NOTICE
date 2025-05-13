@@ -1,0 +1,15 @@
+NOTICE
+
+This project is licensed under the Apache License, Version 2.0.
+You may obtain a copy of the Apache License, Version 2.0 at:
+    https://www.apache.org/licenses/LICENSE-2.0
+
+This project makes use of the following third-party library, which is licensed under a different license:
+
+1. JSAP
+   - License: LGPL 2.1 or later
+   - Copyright: Copyright (c) 2004 Martian Software, Inc.
+   - License URL: https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+   - Summary: This project includes the com.martiansoftware.jsap library, a command-line parsing framework for Java. It is licensed under the GNU Lesser General Public License (LGPL) version 2.1 or later, which permits use and redistribution in proprietary and open source applications, provided dynamic linking or other LGPL compliance conditions are met.
+
+Please review the above license for details about your rights and responsibilities when using this dependency.
