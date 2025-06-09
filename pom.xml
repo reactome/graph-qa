@@ -9,7 +9,7 @@
   <parent>
     <groupId>org.reactome.maven</groupId>
     <artifactId>reactome-parent</artifactId>
-    <version>1.1.0</version>
+    <version>1.0.5</version>
   </parent>
   <description>The QA tests are meant to check the integrity of the data imported into the graph database</description>
   <organization>
