@@ -27,9 +27,11 @@ public class T101_CompartmentWithCyclicSurroundedByAndInstanceOf extends Quality
     @Override
     String getQuery() {
         return "MATCH (n)-[r]->(x)-[e]->(n) " +
-                "WHERE TYPE(r) IN [\"surroundedBy\", \"instanceOf\", \"componentOf\"]  " +
-                "AND TYPE(r) = TYPE(e) " +
-                "OR NOT (n)-[:author|created|edited|modified|revised|reviewed|inferredTo|hasPart|precedingEvent|hasEncapsulatedEvent]-(x) " +
+                "WHERE ((TYPE(r) IN [\"surroundedBy\", \"instanceOf\", \"componentOf\"]  " +
+                "AND TYPE(r) = TYPE(e)) " +
+                "OR NOT (n)-[:author|created|edited|modified|revised|reviewed|inferredTo|hasPart|precedingEvent|hasEncapsulatedEvent]-(x)) " +
+                "AND NOT (TYPE(r) = \"markerReference\" AND TYPE(e) = \"cell\") " +
+                "AND NOT (TYPE(r) = \"cell\" AND TYPE(e) = \"markerReference\") " +
                 "OPTIONAL MATCH (a)-[:created]->(n) " +
                 "OPTIONAL MATCH (m)-[:modified]->(n) " +
                 "RETURN DISTINCT(n.dbId) AS dbIdA, " +
