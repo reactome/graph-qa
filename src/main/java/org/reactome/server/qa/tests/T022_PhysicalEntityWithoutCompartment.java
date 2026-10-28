@@ -32,6 +32,7 @@ public class T022_PhysicalEntityWithoutCompartment extends QualityAssuranceAbstr
     String getQuery() {
         return " MATCH (pe:PhysicalEntity) " +
                 "WHERE NOT (pe)-[:compartment]->(:Compartment) " +
+                "AND NOT pe:Cell " +
                 "OPTIONAL MATCH (a)-[:created]->(pe) " +
                 "OPTIONAL MATCH (m)-[:modified]->(pe) " +
                 "RETURN pe.dbId AS dbId, pe.stId AS stId, pe.displayName AS Name, a.displayName AS Created, m.displayName AS Modified " +
